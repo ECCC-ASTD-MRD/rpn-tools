@@ -2,6 +2,8 @@
 /* 9 Decembre 1996 */
 /*Revision 1.01 Michel Valin */
 /* 26 fevrier 1998 */
+/*Revisions up to 1.05 Michel Valin */
+/* 1999 2000 2001 */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +11,7 @@
 
 void print_usage()
     {
+      printf(" r.date Version 1.05\n\n");
       printf(" Usage   : r.date [-nVSLMM] date1 \n");
       printf(" Resultat: CMC date time stamp\n\n");
       printf(" Usage   : r.date [-nVSL] date1 +nhours\n");
@@ -206,31 +209,14 @@ char *argv[];
         }
       /* calcul de la difference */
       f77name(difdatr)(&stamp0,&stamp1,&nhours);
-      if ( factor_out != 1 ) {
-        iout = nhours * factor_out + 0.5 ;
-        if(out_format_flag) {
-          printf(out_format,iout/3600,(iout-(iout/3600)*3600)/60,iout-(iout/60)*60);
-          }
-        else
-          printf("%d%s",iout,cr);
+      if(out_format_flag) {
+        iout = nhours + 0.5 ;
+        printf(out_format,iout/3600,(iout-(iout/3600)*3600)/60,iout-(iout/60)*60);
         }
       else {
-        printf("%g%s",nhours,cr);
+        nhours *= factor_out ;
+        printf("%15.15g%s",nhours,cr);
         }
     }
   return 0;
 }
-/*
-  dirty patch for HP-UX because iargc and getarg come from libU77 and do
-  not follow the HP $%&#@$ FORTRAN naming convention by appending an
-  underscore to the name (none should be appended according to the
-  usual FORTRAN behaviour)
-*/
-#ifdef HP
-int iargc(){
-return(iargc_());
-}
-void getarg(int *i,char *str, int len){
-getarg_(i,str,len);
-}
-#endif
