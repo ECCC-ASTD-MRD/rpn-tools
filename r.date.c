@@ -11,7 +11,7 @@
 
 void print_usage()
     {
-      printf(" r.date Version 1.05\n\n");
+      printf(" r.date Version 1.06\n\n");
       printf(" Usage   : r.date [-nVSLMM] date1 \n");
       printf(" Resultat: CMC date time stamp\n\n");
       printf(" Usage   : r.date [-nVSL] date1 +nhours\n");
@@ -39,7 +39,7 @@ char *argv[];
   /* Declarations */
   int i;
   int factor_out = 1;
-  long iout;
+  long iout,minutes,seconds;
   int stamp0;
   int stamp1;
   int yyyymmdd;
@@ -210,8 +210,10 @@ char *argv[];
       /* calcul de la difference */
       f77name(difdatr)(&stamp0,&stamp1,&nhours);
       if(out_format_flag) {
-        iout = nhours + 0.5 ;
-        printf(out_format,iout/3600,(iout-(iout/3600)*3600)/60,iout-(iout/60)*60);
+        iout = nhours ;
+        minutes = (nhours - iout) * 60.0 ;
+        seconds = (nhours - iout - minutes/60.0 ) * 3600.0 + .5 ;
+        printf(out_format,iout,minutes,seconds);
         }
       else {
         nhours *= factor_out ;
