@@ -6,21 +6,21 @@ $(PROGRAM): r.resetenv.c
 	rm -f *.o
 
 Linux:
-	r.remotemake -as_armnlib Linux $(PROGRAM) RELS=$(RELS) MENU=$(MENU) CURSES=ncurses
+	r.remotemake -as_armnlib Linux $(PROGRAM) RELS=$(RELS) 
 	r.distribute -as_armnlib -rels_$(RELS) Linux $(PROGRAM)
 SGI:
-	r.remotemake -as_armnlib IRIX64 $(PROGRAM) RELS=$(RELS) MENU=$(MENU)
+	r.remotemake -as_armnlib IRIX64 $(PROGRAM) RELS=$(RELS)
 	r.distribute -as_armnlib -rels_$(RELS) IRIX64 $(PROGRAM)
-	r.remotemake -as_armnlib IRIX $(PROGRAM) RELS=$(RELS) MENU=$(MENU)
+	r.remotemake -as_armnlib IRIX $(PROGRAM) RELS=$(RELS)
 	r.distribute -as_armnlib -rels_$(RELS) IRIX $(PROGRAM)
 HP:
-	r.remotemake -as_armnlib HP-UX $(PROGRAM) RELS=$(RELS) MENU=$(MENU)
+	r.remotemake -as_armnlib HP-UX $(PROGRAM) RELS=$(RELS)
 	r.distribute -as_armnlib -rels_$(RELS) HP-UX $(PROGRAM)
 SX4:
-	r.remotemake -as_armnlib SX4 $(PROGRAM) RELS=$(RELS) MENU=NO
+	r.remotemake -as_armnlib SX4 $(PROGRAM) RELS=$(RELS)
 	r.distribute -as_armnlib -rels_$(RELS) -newbin SX4 $(PROGRAM)
 SX5:
-	r.remotemake -as_armnlib SX5 $(PROGRAM) RELS=$(RELS) MENU=NO
+	r.remotemake -as_armnlib SX5 $(PROGRAM) RELS=$(RELS)
 	r.distribute -as_armnlib -rels_$(RELS) -newbin SX5 $(PROGRAM)
 
 all:	Linux SGI HP SX4 SX5
