@@ -15,7 +15,7 @@ void print_usage()
       printf(" Resultat: YYYYMMDDHHMMSSHH=date1+nhours\n\n");
       printf(" Usage   : r.date [-nVSL] date1 -nhours\n");
       printf(" Resultat: YYYYMMDDHHMMSSHH=date1-nhours\n\n");
-      printf(" Usage   : r.date [-nVSL] date1 date2\n");
+      printf(" Usage   : r.date [-nVSLpP] [format_string] date1 date2\n");
       printf(" Resultat: nhours=date1-date2\n\n");
       printf(" Formats :\n");
       printf(" date1 et date2 (integer): YYYYMMDD[HH][MM][SS][HH] or 9 digit CMC timestamp\n");
@@ -23,11 +23,13 @@ void print_usage()
       printf(" options : -n mettre une fin de ligne, -L sortie en format eclate YYYY MM DD HH MM SS\n");
       printf("           -S sorti en format CMC timestamp, -V sortie en format YYYYMMDDHHMMSS00\n");
       printf("           -M multiplier le resultat par 60 -MM multiplier le resultat par 3600  \n");
+      printf("           -p imprimer heures minutes secondes avec le format format_string      \n");
+      printf("           -P imprimer heures minutes secondes avec le format HHHMMSS      \n");
       printf(" nhours  : nnn (heures), nnnS (secondes), nnnM (minutes), nnnD (jours), nnnW (semaines)\n");
       exit(1) ;
     }
 
-int main(argc,argv)
+int f77name(r_date_main)(argc,argv)
 int argc;
 char *argv[];
 {
@@ -52,6 +54,9 @@ char *argv[];
   char *options;
   char time_opt;
   int not_alphnum=1;
+  char *out_format=NULL;
+  int out_format_flag=0;
+  
 
   while (argc > 1 && *argv[1]=='-') {
      options = argv[1];
@@ -62,12 +67,20 @@ char *argv[];
        case 'L' : force_long = 1; break ;
        case 'M' : factor_out *= 60 ; break ;
        case 'n' : cr="\n" ; break ;
+       case 'p' : out_format_flag=1 ; break ;
+       case 'P' : out_format_flag=1 ; out_format="%03d%02d%02d" ; break ;
        default  : print_usage(); break ;
          }
        }
       ++argv;
       --argc;
      }
+  if(out_format_flag && (out_format == NULL) ) {
+    out_format=argv[1];
+    ++argv;
+    --argc;
+    }
+  if(out_format_flag) factor_out = 3600 ;
 
   /* Usage : */
   if (argc < 2 ) print_usage();
@@ -195,7 +208,11 @@ char *argv[];
       f77name(difdatr)(&stamp0,&stamp1,&nhours);
       if ( factor_out != 1 ) {
         iout = nhours * factor_out + 0.5 ;
-        printf("%d%s",iout,cr);
+        if(out_format_flag) {
+          printf(out_format,iout/3600,(iout-(iout/3600)*3600)/60,iout-(iout/60)*60);
+          }
+        else
+          printf("%d%s",iout,cr);
         }
       else {
         printf("%g%s",nhours,cr);
@@ -203,3 +220,17 @@ char *argv[];
     }
   return 0;
 }
+/*
+  dirty patch for HP-UX because iargc and getarg come from libU77 and do
+  not follow the HP $%&#@$ FORTRAN naming convention by appending an
+  underscore to the name (none should be appended according to the
+  usual FORTRAN behaviour)
+*/
+#ifdef HP
+int iargc(){
+return(iargc_());
+}
+void getarg(int *i,char *str, int len){
+getarg_(i,str,len);
+}
+#endif

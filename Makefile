@@ -1,25 +1,34 @@
-CC=cc32
-F77=f7732
-SHELL= /bin/sh
-RMNLIB= $(ARMNLIB)/$(NEC)lib/librmn32stack_LR.a
-RMNLIBETA= $(ARMNLIB)/$(NEC)lib/librmnbeta.a
-
-GENDEFINE= BIT32
 
 .DEFAULT:
 	co $@
 
 r.date: r.date.c
-	$(CC)  $(NEC) -O $(CFLAGS) -c r.date.c
-	$(F77) $(NEC) -o $@_$(host)$(NEC) r.date.o $(RMNLIB) $(EXTRALIB)
+	rm -f *.o r.date r.date_$(ARCH)
+	r.compile_beta -bidon c -main r_date_main -o r.date -src r.date.c -librmn
+	mv r.date r.date_$(ARCH)
 	rm -f *.o
 
-all:
-	r.remotemake $(RELS) pollux r.date
-	r.remotemake $(RELS) zephyr r.date host=irix5
-	r.remotemake $(RELS) newton r.date
-	r.remotemake galois $(RELS) r.date F77=cc32 EXTRALIB="'-L/usr/local/pgi/linux86/lib -lpgftnrtl -lpgc'" 
-	make NEC=SX4 r.date
+all: hp sgi alpha sx5 x86
+
+hp:
+	r.remotemake HP-UX r.date
+	r.distribute -as_armnlib -rels_$(RELS) HP-UX r.date
+
+sgi:
+	r.remotemake IRIX64 r.date
+	r.distribute -as_armnlib -rels_$(RELS) IRIX64 r.date
+
+alpha:
+	r.remotemake Linux_alpha r.date
+	r.distribute -as_armnlib -rels_$(RELS) Linux_alpha r.date
+
+x86:
+	r.remotemake Linux r.date
+	r.distribute -as_armnlib -rels_$(RELS) Linux r.date
+
+sx5:
+	r.remotemake SX5 r.date
+	r.distribute -as_armnlib -rels_$(RELS) -newbin SX5 r.date
 
 clean:
 	rm -f *.o r.date_*
