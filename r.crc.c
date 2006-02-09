@@ -18,7 +18,7 @@ main(int argc,char **argv)
    int n,nbufs=0;
 
    if (argc >= 2) {
-     fd = open(argv[1],O_RDONLY
+     fd = open64(argv[1],O_RDONLY
 #ifdef DIRECTIO
           +O_DIRECT
 #endif
