@@ -53,6 +53,8 @@
       if (ier .gt. -1) then
         write(6,77) 'File type is ',msgs(ier)
       else if (ier .eq. -1) then
+         call system(
+     %   'file -m /usr/local/env/armnlib/data/magic.extra '//val(1))
          call system('file '//val(1))
       else if (ier .eq. -2) then
          write(6,99)
