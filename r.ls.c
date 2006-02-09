@@ -43,7 +43,9 @@ while (*temp) {
 /* if rsh, env variable ARMNLIB is unknown */
 
 gethostname(hostname,1022);
+/*
 if(strcmp("mach",hostname)==0) strcpy(hostname,"maxwell");
+*/
 i=strlen(hostname);
 hostname[i]=':';
 hostname[i+1]='\0';
