@@ -1,6 +1,6 @@
 .SUFFIXES:
 
-.SUFFIXES : .c .ftn .f .o .cdk
+.SUFFIXES : .c .ftn .f .o .cdk .ftn90
 
 FFLAGS =
 
@@ -14,6 +14,9 @@ PROGRAM = r.basename
 
 
 default: $(PROGRAM)
+
+.ftn90.o:
+	r.compile -arch $(ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .ftn.o:
 	r.compile -arch $(ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
@@ -31,8 +34,8 @@ Linux:  clean
 SGI:    clean
 	r.remotemake -as_armnlib IRIX64 $(PROGRAM) RELS=$(RELS)
 	r.distribute -as_armnlib -rels_$(RELS) IRIX64 $(PROGRAM)
-	r.remotemake -as_armnlib IRIX $(PROGRAM) RELS=$(RELS)
-	r.distribute -as_armnlib -rels_$(RELS) IRIX $(PROGRAM)
+#	r.remotemake -as_armnlib IRIX $(PROGRAM) RELS=$(RELS)
+#	r.distribute -as_armnlib -rels_$(RELS) IRIX $(PROGRAM)
 
 HP:     clean
 	r.remotemake -as_armnlib HP-UX $(PROGRAM) RELS=$(RELS)
@@ -87,6 +90,9 @@ nl2crlf: nl2crlf.o
 
 traffic: traffic.o
 	r.build -o $@_$(ARCH) -obj traffic.o -arch $(ARCH) -abi $(ABI) -conly
+
+r.crackres: crackres.o
+	r.build -o $@_$(ARCH) -obj crackres.o -arch $(ARCH) -abi $(ABI) -librmn rmn_x
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic
 
