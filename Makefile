@@ -94,7 +94,17 @@ traffic: traffic.o
 r.crackres: crackres.o
 	r.build -o $@_$(ARCH) -obj crackres.o -arch $(ARCH) -abi $(ABI) -librmn rmn_x
 
-allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic
+arbre: arbre.o
+	r.build -o arbre -obj arbre.o -arch $(ARCH) -abi $(ABI) -conly
+
+grepdep: grepdep.o
+	r.build -o grepdep -obj grepdep.o -arch $(ARCH) -abi $(ABI) -conly
+
+r.ucanrm: r.ucanrm.o
+	r.build -o r.ucanrm -obj r.ucanrm.o -arch $(ARCH) -abi $(ABI) -conly
+
+allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
+        arbre grepdep r.ucanrm
 
 clean:
 	-if [ "*.ftn" != "`echo *.ftn`" ] ; \
