@@ -1,6 +1,6 @@
       program filetyp
       character *8 cle
-      character *128 def(1),val(1)
+      character *4096 def(1),val(1)
       character *60 msgs(-1:34)
       integer wkoffit
 
@@ -49,7 +49,7 @@
       ipos = 0
       call ccard (cle,def,val,1,ipos)
 
-      ier = wkoffit(val)
+      ier = wkoffit(val(1))
       if (ier .gt. -1) then
         write(6,77) 'File type is ',msgs(ier)
       else if (ier .eq. -1) then
