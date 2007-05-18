@@ -57,3 +57,5 @@ main(int argc,char **argv)
      fprintf(stderr,"usage: r.crc filename [byte_stride]\n");
      }
 }
+
+char * product_id_tag="$Id$";
