@@ -5,6 +5,7 @@
 /*Revisions up to 1.05 Michel Valin */
 /* 1999 2000 2001 */
 /*Revision 1.07 M. Lepine - iopdatm.o pour $SPECIAL__uspmadt */
+/*Revision 1.07 M. Lepine - Mai 2007, product id tag + reload librmn_009 */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +13,7 @@
 
 void print_usage()
     {
-      printf(" r.date Version 1.07\n\n");
+      printf(" r.date Version 1.08\n\n");
       printf(" Usage   : r.date [-nVSLMM] date1 \n");
       printf(" Resultat: CMC date time stamp\n\n");
       printf(" Usage   : r.date [-nVSL] date1 +nhours\n");
@@ -223,3 +224,5 @@ char *argv[];
     }
   return 0;
 }
+
+static product_id_tag="$Id$";
