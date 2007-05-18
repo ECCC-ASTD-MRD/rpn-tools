@@ -4,6 +4,7 @@
 /* 26 fevrier 1998 */
 /*Revisions up to 1.05 Michel Valin */
 /* 1999 2000 2001 */
+/*Revision 1.07 M. Lepine - iopdatm.o pour $SPECIAL__uspmadt */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +12,7 @@
 
 void print_usage()
     {
-      printf(" r.date Version 1.06\n\n");
+      printf(" r.date Version 1.07\n\n");
       printf(" Usage   : r.date [-nVSLMM] date1 \n");
       printf(" Resultat: CMC date time stamp\n\n");
       printf(" Usage   : r.date [-nVSL] date1 +nhours\n");
@@ -32,7 +33,7 @@ void print_usage()
       exit(1) ;
     }
 
-int f77name(r_date_main)(argc,argv)
+int r_date_main(argc,argv)
 int argc;
 char *argv[];
 {

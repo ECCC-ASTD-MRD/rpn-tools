@@ -4,7 +4,7 @@
 
 r.date: r.date.c
 	rm -f *.o r.date r.date_$(ARCH)
-	r.compile_beta -bidon c -main r_date_main -o r.date -src r.date.c -codebeta fmain2cmain -librmn rmn_x
+	r.compile -bidon c -main r_date_main -o r.date -src r.date.c -librmn rmnbeta
 	mv r.date r.date_$(ARCH)
 	rm -f *.o
 
