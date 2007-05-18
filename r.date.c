@@ -5,7 +5,8 @@
 /*Revisions up to 1.05 Michel Valin */
 /* 1999 2000 2001 */
 /*Revision 1.07 M. Lepine - iopdatm.o pour $SPECIAL__uspmadt */
-/*Revision 1.07 M. Lepine - Mai 2007, product id tag + reload librmn_009 */
+/*Revision 1.08 M. Lepine - Mai 2007, product id tag + reload librmn_009 */
+/*Revision 1.09 M. Lepine - Mai 2007, correction format */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,7 @@
 
 void print_usage()
     {
-      printf(" r.date Version 1.08\n\n");
+      printf(" r.date Version 1.09\n\n");
       printf(" Usage   : r.date [-nVSLMM] date1 \n");
       printf(" Resultat: CMC date time stamp\n\n");
       printf(" Usage   : r.date [-nVSL] date1 +nhours\n");
@@ -219,7 +220,7 @@ char *argv[];
         }
       else {
         nhours *= factor_out ;
-        printf("%15.15g%s",nhours,cr);
+        printf("%g%s",nhours,cr);
         }
     }
   return 0;
