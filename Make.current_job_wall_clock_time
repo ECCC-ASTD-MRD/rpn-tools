@@ -1,0 +1,9 @@
+#! /bin/ksh
+# generer r.current_job_wall_clock_tim
+if [ ${ARCH} = AIX ] ; then
+  PARAMS="-libpath /usr/local/env/armnlib/lib/AIX -libappl llapi -obj /usr/local/env/armnlib/lib/AIX/resident_time.o"
+else
+  PARAMS=""
+fi
+r.compile -o r.current_job_wall_clock_time ${PARAMS} -src r.current_job_wall_clock_time.ftn
+exit $?
