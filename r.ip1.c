@@ -1,5 +1,12 @@
 /* r.ip1 program 
-   Author: Vivian Lee, RPN, December 5, 2002 
+   Author: Vivian Lee, RPN, December 5, 2002
+
+Revision:
+V2.0 Lee V., Mar  7, 2005 - convert from function to program
+V3.0 Lee V., Jan 22, 2007 - adapt to take in negative values 
+V4.0 Lee V., Oct 22, 2008 - an ip1code with no "-k" returned level_S and lev 
+             but now returns level_S unless kind=3, then it will add "others"
+
 */
 #include <rpnmacros.h>
 #include <stdlib.h>
@@ -8,23 +15,27 @@
 
 void print_usage()
     {
-      printf(" Usage : r.ip1 [-nk] ip1code \n");
-      printf(" Result: value kind\n\n");
-      printf(" Usage : r.ip1 [-no] value kind\n");
-      printf(" Usage : r.ip1 [-no] --value kind (for neg values)\n");
-      printf(" Result: ip1code\n\n");
+      printf(" Usage : r.ip1 [-nk] ip1code\n");
+      printf(" Result: value [level_type or kind]\n");
+      printf(" Usage : r.ip1 [-no] [--]value kind\n");
+      printf(" Result: ip1code(newstyle or oldstyle)\n");
       printf(" Formats :\n");
-      printf(" options : -n to add eol \n");
+      printf(" options : -n to add end of line char\n");
       printf("         : -k to get code for kind \n");
-      printf("         : -o to get ip1code in oldstyle \n\n");
-      printf(" kind    : level type\n");
-      printf(" 0       : height [m] (metres)\n");
-      printf(" 1       : sigma  [sg] (0.0->1.0)\n");
-      printf(" 2       : pressure [mb] (millibars)\n");
-      printf(" 3       : arbitrary code\n");
-      printf(" 4       : height [M] (metres) with respect to ground level\n");
-      printf(" 5       : hybrid coordinates [hy] (0.0->1.0)\n");
-      printf(" 6       : theta [th]\n");
+      printf("         : -o to get ip1code in oldstyle \n");
+      printf("         : -- to indicate value is negative \n");
+      printf(" kind    : level_type\n");
+      printf(" 0       : m  [metres] (height with respect to sea level)\n");
+      printf(" 1       : sg [sigma] (0.0->1.0)\n");
+      printf(" 2       : mb [mbars] (pressure in millibars)\n");
+      printf(" 3       :    [others] (arbitrary code)\n");
+      printf(" 4       : M  [metres] (height with respect to ground level)\n");
+      printf(" 5       : hy [hybrid] (0.0->1.0)\n");
+      printf(" 6       : th [theta]\n");
+      printf("Example(1): r.ip1 -nk 1000\n");
+      printf("1000.000000 2\n");
+      printf("Example(2): r.ip1 -o 1000.0 2\n");
+      printf("1000\n");
       exit(1) ;
     }
 
@@ -75,7 +86,10 @@ char *argv[];
       if (kind_in_int) {
           printf("%f %d %s",lev,kind,cr);
           }
-      else printf("%#15s %f %s",level_s,lev,cr);
+      else if (kind == 3) {
+              printf("%f others%s",lev,cr);
+               }
+      else printf("%#s%s",level_s,cr);
   } 
 
 /*     printf("argc=%d\n",argc); */
