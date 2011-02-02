@@ -26,6 +26,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define ncarmax 132
@@ -151,14 +152,13 @@ int indice;
 *         apos1     -  pointeur a la position ou fini le traitement
 */
 {
-     char *strchr();
      char *apos2;
-     char *getdelim();
+     char *mygetdelim();
      int tolower();
 
      if(indice == 0)
      {
-        apos1=getdelim(buf);
+        apos1=mygetdelim(buf);
         indice =  1;
      }
      else
@@ -210,14 +210,13 @@ int indice;
 *         apos1     -  pointeur a la position ou fini le traitement
 */
 {
-     char *strchr();
      char *apos2;
      int toupper();
-     char *getdelim();
+     char *mygetdelim();
 
      if(indice == 0)
      {
-         apos1 = getdelim(buf);
+         apos1 = mygetdelim(buf);
          indice = 1;
      }
      else
@@ -267,14 +266,13 @@ int indice;
 *         apos1     -  pointeur a la position ou fini le traitement
 */
 {
-     char *strchr();
      char *apos2;
      int toupper();
-     char *getdelim();
+     char *mygetdelim();
 
      if(indice == 0)
      {
-         apos1 = getdelim(buf);
+         apos1 = mygetdelim(buf);
          indice = 1;
      }
      else
@@ -299,7 +297,7 @@ int indice;
  *   Auteur: James Caveen mai 1991                                    *
  **********************************************************************/
 
-char *getdelim(buffer)
+char *mygetdelim(buffer)
 char *buffer;
 
 /*     fonction servant a trouver le premier delimiteur a partir de la 
@@ -312,7 +310,6 @@ char *buffer;
 */
 {
              char *apos, *guil;
-             char *strchr();
 
              apos = strchr(buffer,'\'');
              guil = strchr(buffer,'"');
