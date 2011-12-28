@@ -2,7 +2,7 @@ SHELL= /bin/sh
 PROGRAM=r.resetenv
 
 $(PROGRAM): r.resetenv.c
-	r.compile -arch $(ARCH) -conly -librmn -o $@_$(ARCH) -src r.resetenv.c
+	r.compile -arch $(EC_ARCH) -conly -librmn -o $@_$(EC_ARCH) -src r.resetenv.c
 	rm -f *.o
 
 Linux:
