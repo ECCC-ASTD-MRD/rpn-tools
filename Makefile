@@ -17,20 +17,20 @@ CPPFLAGS = -I$(ARMNLIB)/include
 default: absolu
 
 .ftn.o:
-	r.compile -arch $(ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	r.compile -arch $(ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
+	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
 .f.o:
-	r.compile -arch $(ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 OBJET= r.ip1.o
 
 FICHIERS = $(FDECKS)
 
 absolu: $(OBJET)
-	r.build -o r.ip1 -obj $(OBJET) -bidon c -main r_ip1 -arch $(ARCH) -abi $(ABI) -librmn rmn_rc009
+	r.build -o r.ip1 -obj $(OBJET) -bidon c -main r_ip1 -arch $(EC_ARCH) -abi $(ABI) -librmn rmn_rc009
 
 clean:
 #Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
