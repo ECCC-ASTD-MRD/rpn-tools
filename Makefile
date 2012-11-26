@@ -14,23 +14,25 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = -I$(ARMNLIB)/include
 
+VER = 4.0
+
 default: absolu
 
 .ftn.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
 .f.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 OBJET= ip1newstyle.o
 
 FICHIERS = $(FDECKS)
 
 absolu: $(OBJET)
-	r.build -o ip1newstyle -obj $(OBJET) -arch $(EC_ARCH) -abi $(ABI) -librmn rmnbeta
+	s.compile -o ip1newstyle_$(VER)-$(BASE_ARCH) -obj $(OBJET) -arch $(EC_ARCH) -abi $(ABI) -librmn rmn_013
 
 clean:
 #Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
@@ -42,4 +44,4 @@ clean:
 	rm -f $$fn.f; \
 	done \
 	fi
-	rm *.o ip1newstyle
+	rm *.o ip1newstyle_$(VER)-$(BASE_ARCH)
