@@ -8,20 +8,22 @@ CPPFLAGS = -I$(ARMNLIB)/include
 
 OBJETS = filetyp.o
 
+VER = 005
+
 default: absolu
 
 .ftn.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
 .f.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 absolu: $(OBJETS)
-	r.build -o r.filetype -obj $(OBJETS) -arch $(EC_ARCH) -abi $(ABI) -librmn rmn_x
+	s.compile -o r.filetype_$(VER)-$(BASE_ARCH) -obj $(OBJETS) -abi $(ABI) -librmn rmn_013
 
 clean:
-	rm r.filetype $(OBJETS)
+	rm r.filetype_$(VER)-$(BASE_ARCH) $(OBJETS)
 
