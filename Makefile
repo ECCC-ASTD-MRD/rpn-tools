@@ -10,22 +10,24 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = -I$(ARMNLIB)/include
 
-PROGRAM = r.basename
+VER = 2.1
+
+PROGRAM = r.basename 
 
 
-default: $(PROGRAM)
+default: allbin
 
 .ftn90.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .ftn.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)"  -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)"  -src $<
 
 .f.o:
-	r.compile -arch $(EC_ARCH) -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 Linux:  clean
 	r.remotemake -as_armnlib Linux $(PROGRAM) RELS=$(RELS)
@@ -53,55 +55,55 @@ all:	Linux SGI HP SX4 SX5
 
 
 r.basename: r.basename.o
-	r.build -o $@_$(EC_ARCH) -obj r.basename.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o -abi $(ABI) -conly
 
 r.ls: r.ls.o
-	r.build -o $@_$(EC_ARCH) -obj r.ls.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ls.o -abi $(ABI) -conly
 
 r.isowner: r.isowner.o
-	r.build -o $@_$(EC_ARCH) -obj r.isowner.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.isowner.o -abi $(ABI) -conly
 
 r.echo: r.echo.o
-	r.build -o $@_$(EC_ARCH) -obj r.echo.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.echo.o -abi $(ABI) -conly
 
 r.split: spliter.o
-	r.build -o $@_$(EC_ARCH) -obj spliter.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj spliter.o -abi $(ABI) -conly
 
 kmwtopcl: kmwtopcl.o newdx.o
-	r.build -o $@_$(EC_ARCH) -obj kmwtopcl.o newdx.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtopcl.o newdx.o -abi $(ABI) -conly
 
 kmwtohp: kmwtohp.o newdx.o
-	r.build -o $@_$(EC_ARCH) -obj kmwtohp.o newdx.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtohp.o newdx.o -abi $(ABI) -conly
 
 r.a2ps: a2ps.o
-	r.build -o $@_$(EC_ARCH) -obj a2ps.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj a2ps.o -abi $(ABI) -conly
 
 text2ps: text2ps.o
-	r.build -o $@_$(EC_ARCH) -obj text2ps.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj text2ps.o -abi $(ABI) -conly
 
 outine: outine.o
-	r.build -o $@_$(EC_ARCH) -obj outine.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj outine.o -abi $(ABI) -conly
 
 lpage: lpage.o
-	r.build -o $@_$(EC_ARCH) -obj lpage.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj lpage.o -abi $(ABI) -conly
 
 nl2crlf: nl2crlf.o
-	r.build -o $@_$(EC_ARCH) -obj nl2crlf.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj nl2crlf.o -abi $(ABI) -conly
 
 traffic: traffic.o
-	r.build -o $@_$(EC_ARCH) -obj traffic.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o -abi $(ABI) -conly
 
 r.crackres: crackres.o
-	r.build -o $@_$(EC_ARCH) -obj crackres.o -arch $(EC_ARCH) -abi $(ABI) -librmn rmn_x
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -abi $(ABI) -librmn rmn_x
 
 arbre: arbre.o
-	r.build -o arbre -obj arbre.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o arbre_$(VER)-$(BASE_ARCH) -obj arbre.o -abi $(ABI) -conly
 
 grepdep: grepdep.o
-	r.build -o grepdep -obj grepdep.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o grepdep_$(VER)-$(BASE_ARCH) -obj grepdep.o -abi $(ABI) -conly
 
 r.ucanrm: r.ucanrm.o
-	r.build -o r.ucanrm -obj r.ucanrm.o -arch $(EC_ARCH) -abi $(ABI) -conly
+	s.compile -o r.ucanrm_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm
@@ -115,5 +117,5 @@ clean:
 	rm -f $$fn.f; \
 	done \
 	fi
-	-rm *_$(EC_ARCH) *.o
+	-rm *_$(VER)-$(BASE_ARCH) *.o
 

@@ -371,7 +371,8 @@ char *arg;
     float size;
 
     switch (arg[1]) {
-    case NULL:				/* global option */
+    /*case NULL:*/				/* global option */
+    case '\0':
 	break;
     case '#':				/* n copies */
 	if (sscanf(&arg[2], "%d", &copies) != 1 || copies <= 0)
