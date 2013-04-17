@@ -7,6 +7,8 @@
 /*Revision 1.07 M. Lepine - iopdatm.o pour $SPECIAL__uspmadt */
 /*Revision 1.08 M. Lepine - Mai 2007, product id tag + reload librmn_009 */
 /*Revision 1.09 M. Lepine - Mai 2007, correction format */
+/*Revision 1.10 M. Lepine - Jul 2012, add extended format */
+/*Revision 1.11 V. Lee    - Apr 2013, add comments for help */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,24 +16,28 @@
 
 void print_usage()
     {
-      printf(" r.date Version 1.09\n\n");
-      printf(" Usage   : r.date [-nVSLMM] date1 \n");
-      printf(" Resultat: CMC date time stamp\n\n");
-      printf(" Usage   : r.date [-nVSL] date1 +nhours\n");
-      printf(" Resultat: YYYYMMDDHHMMSSHH=date1+nhours\n\n");
-      printf(" Usage   : r.date [-nVSL] date1 -nhours\n");
-      printf(" Resultat: YYYYMMDDHHMMSSHH=date1-nhours\n\n");
-      printf(" Usage   : r.date [-nVSLpP] [format_string] date1 date2\n");
-      printf(" Resultat: nhours=date1-date2\n\n");
-      printf(" Formats :\n");
-      printf(" date1 et date2 (integer): YYYYMMDD[HH][MM][SS][HH] or 9 digit CMC timestamp\n");
-      printf(" nhours  : real*8\n");
-      printf(" options : -n mettre une fin de ligne, -L sortie en format eclate YYYY MM DD HH MM SS\n");
-      printf("           -S sorti en format CMC timestamp, -V sortie en format YYYYMMDDHHMMSS00\n");
-      printf("           -M multiplier le resultat par 60 -MM multiplier le resultat par 3600  \n");
-      printf("           -p imprimer heures minutes secondes avec le format format_string      \n");
-      printf("           -P imprimer heures minutes secondes avec le format HHHMMSS      \n");
-      printf(" nhours  : nnn (heures), nnnS (secondes), nnnM (minutes), nnnD (jours), nnnW (semaines)\n");
+      printf(" r.date Version 1.11\n");
+      printf(" Usage   : r.date [-nVSLMM] date1 [+ntime][SMDW]\n");
+      printf(" Resultat: YYYYMMDDHHMMSSHH or CMC date time stamp\n");
+      printf(" Example: r.date 2013041700 \n");
+      printf(" Example: r.date 2013041700 +24\n");
+      printf(" Example: r.date =-1274137515 +24S\n");
+      printf(" Example: r.date 385856000 +1.5D\n");
+      printf(" Usage   : r.date [-nVSLpP] date1 date2\n");
+      printf(" Resultat: nhours (date1-date2)\n");
+      printf(" Example: r.date 2013041700  2013041600\n");
+      printf(" Formats Allowed:\n");
+      printf(" date1/date2: YYYYMMDD[HH][MM][SS][HH] or 9 digit CMC timestep\n");
+      printf(" ntime units: none:hour,S:sec,M:min,D:day,W:week\n");
+      printf(" options : \n");
+      printf(" -n newline char\n");
+      printf(" -L output format YYYY MM DD HH MM SS\n");
+      printf(" -S output format CMC timestamp\n");
+      printf(" -V output format YYYYMMDDHHMMSS00\n");
+      printf(" -M  multiply result by 60    \n");
+      printf(" -MM multiply result by 3600  \n");
+      printf(" -p print hours mins secs with C format_string \n");
+      printf(" -P print hours mins secs with format format HHHMMSS\n");
       exit(1) ;
     }
 
