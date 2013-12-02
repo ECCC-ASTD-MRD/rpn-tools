@@ -8,7 +8,7 @@ CPPFLAGS = -I$(ARMNLIB)/include
 
 OBJETS = r.crc.o
 
-VER = 2.1
+VER = 2.2
 
 default: absolu
 
