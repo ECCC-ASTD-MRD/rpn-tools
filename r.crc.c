@@ -1,12 +1,12 @@
+#define _LARGEFILE64_SOURCE
+#define _FILE_OFFSET_BITS 64
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
 /* #include "rpnmacros.h" */
 #include <string.h>
-
-#define _LARGEFILE64_SOURCE
-#define _FILE_OFFSET_BITS 64
 
 int calc_crc(char *buffer,int *l,int *seed,int stride);
 main(int argc,char **argv)
