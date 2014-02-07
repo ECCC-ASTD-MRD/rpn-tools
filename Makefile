@@ -4,9 +4,11 @@
 
 VER = 111
 
+LIBRMN = rmn_014
+
 r.date: r.date.c
 	rm -f *.o r.date r.date_$(BASE_ARCH)
-	s.compile -bidon c -main r_date_main -o r.date -src r.date.c -librmn rmn_013
+	s.compile -bidon c -main r_date_main -o r.date -src r.date.c -librmn $(LIBRMN)
 	mv r.date r.date_$(VER)-$(BASE_ARCH)
 	rm -f *.o
 
