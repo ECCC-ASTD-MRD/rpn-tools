@@ -23,18 +23,28 @@
 #include <stdlib.h>
 #include <string.h>
 
-// int connect_to_channel_by_name(char *name);
+#define Termine(err)                   \
+   {                                   \
+     fflush(stdout);                   \
+     fflush(stderr);                   \
+     ier = system(move_cmd);           \
+     if (err) exit(err);               \
+   }                                   \
+
+/* int connect_to_channel_by_name(char *name); */
 
 main(int argc, char **argv)
 {
   int ipaddress,port,nc;
-  char buf[1024], tempout[256], temperr[256];
+  char buf[1024], tempout[256], temperr[256], home_out[256], home_err[256];
+  char move_cmd[512];
   char ftype[128] = {"RND,"};
   char *ctemp;
+  char *HOME;
   int *wa_buf;
   int max_n = 1024;
-  int fdesc;
-  int iun, ier, nlu, necrit, c_iun, not_over=1;
+  int fdesc, UID, PID;
+  int iun, ier, nlu, necrit, c_iun, not_over=1, spin_count=0;
   int access_mode=F_OK, new_checksum;
   int *s_ID, *addr, *nw, *RW_mode, *checksum;
   		/* RW_mode = 1  		read request */
@@ -75,43 +85,66 @@ main(int argc, char **argv)
 
   if(fork()) exit(0);
 
-  snprintf(tempout,256,"%s_%i_%i","/tmp/WA_Socket_stdout",getuid(),getpid());
-  snprintf(temperr,256,"%s_%i_%i","/tmp/WA_Socket_stderr",getuid(),getpid());
+  UID = getuid();
+  PID = getpid();
+  HOME = getenv("HOME");
+
+  snprintf(tempout,256,"%s_%i_%i","/tmp/WA_Socket_stdout",UID,PID);
+  snprintf(temperr,256,"%s_%i_%i","/tmp/WA_Socket_stderr",UID,PID);
+  
+  snprintf(home_out,256,"%s%s",HOME,"/.WA_Socket_stdout");
+  snprintf(home_err,256,"%s%s",HOME,"/.WA_Socket_stderr");
+  
+  snprintf(move_cmd,512,"mv %s %s; mv %s %s",tempout,home_out,temperr,home_err);
+
   freopen("/dev/null","a",stdin);
   freopen(tempout,"a",stdout);
   freopen(temperr,"a",stderr);
   setpgrp();
-//  sleep(10);
-//  exit(0);
-  printf("connecting\n");
+/*  sleep(10); */
+/*  exit(0); */
+  printf("CONNECTING (wa_server2)\n");
   fflush(stdout);
   printf("arguments a l'appel %s %s %s\n",argv[1],argv[2],argv[3]);
+  fflush(stdout);
+  fdesc=connect_to_hostport(1+argv[3]);
+  if(fdesc <= 0) {
+    fprintf(stderr,"connect_to_hostport: unable to connect\n");
+    Termine(2);
+  }
+  printf("fdesc=%d\n",fdesc);
   fflush(stdout);
   iun = 0;
   ctemp = strcat(ftype,argv[2]);
   ier = c_fnom(&iun,argv[1],ftype,0);
-//  ier = c_fnom(&iun,argv[1],"RND",0);
+/*  ier = c_fnom(&iun,argv[1],"RND",0); */
   if (ier < 0) {
     fprintf(stderr,"c_fnom error: iun=%d err=%d\n",iun,ier);
-    exit(1);
+    Termine(1);
   }
   printf("fnom file=%s type=%s ier=%d iun=%d\n",argv[1],ftype,ier,iun);
   c_waopen(iun);
-  fdesc=connect_to_hostport(1+argv[3]);
-  if(fdesc <= 0) {
-    fprintf(stderr,"connect_to_hostport: unable to connect\n");
-    exit(2);
-  }
-  printf("fdesc=%d\n",fdesc);
-  fflush(stdout);
   wa_buf = calloc(1024,sizeof(int));
-//  nc=read(fdesc,buf,1023);
-	while (not_over) {
+/*  nc=read(fdesc,buf,1023); */
+  spin_count = 0;
+  while (not_over) {
+    demande[0]=0;  demande[1]=0; demande[2]=0; demande[3]=0; demande[4]=0;
     nc=read_stream(fdesc,demande,5*sizeof(int));
+    if (nc == 0) {
+      if (spin_count < 60) {
+        spin_count++;
+        continue;
+        }
+      else {
+        fprintf(stderr,"socket_wa_server timed out after 5 sec.\n");
+        not_over = 0;
+        break;
+        }
+    }
     check_swap_records(demande,nc/sizeof(int),sizeof(int));
     printf("read (demande) %d bytes from descriptor %d \n",nc,fdesc);
     fflush(stdout);
-  //  sscanf(buf,"%d %d %d",&c_iun,&addr,&nw);
+  /*  sscanf(buf,"%d %d %d",&c_iun,&addr,&nw); */
     new_checksum = *s_ID ^ *addr ^ *nw ^ *RW_mode;
     printf("demande de RW_mode=%d addr=%d nw=%d\n",*RW_mode,*addr,*nw);
     fflush(stdout);  
@@ -122,7 +155,7 @@ main(int argc, char **argv)
       fflush(stderr);
       close(fdesc);
       }
-  	if (*RW_mode == 3) {   /* close request */
+    if (*RW_mode == 3) {   /* close request */
       printf("Debug+ socket_wa_server requete de FERMETURE de session\n");
       unlink(tempout);
       unlink(temperr);
@@ -137,19 +170,21 @@ main(int argc, char **argv)
       max_n = *nw;
     }
     if (*RW_mode == 1) {  /* read request */
+      spin_count = 0;
       printf("Debug+ socket_wa_server requete de LECTURE\n");
       fflush(stdout);
       nlu = c_waread2(iun,wa_buf,*addr,*nw);
       if (nlu != *nw) {
         fprintf(stderr,"socket_wa_server read error, request nw=%d, read=%d\n",*nw,nlu);
         close(fdesc);
-        exit(3);
+        Termine(3);
       }
       check_swap_records(wa_buf,*nw,sizeof(int));
       nc=write_stream(fdesc,wa_buf,*nw * sizeof(int));
       printf("wrote %d bytes to descriptor %d at address %s\n",*nw * sizeof(int),fdesc,1+argv[3]);
     }
     else if (*RW_mode == 2) {   /* write request */
+      spin_count = 0;
       printf("Debug+ socket_wa_server requete d'ECRITURE\n");
       fflush(stdout);
     	nc=read_stream(fdesc,wa_buf,*nw * sizeof(int));
@@ -158,7 +193,7 @@ main(int argc, char **argv)
         fprintf(stderr,"socket_wa_server write request: read_stream error, expecting %d bytes , got %d\n",
         				*nw,nc);
         close(fdesc);
-        exit(3);
+        Termine(3);
       }     
       check_swap_records(wa_buf,*nw,sizeof(int));
       necrit = c_wawrit2(iun,wa_buf,*addr,*nw);
@@ -166,10 +201,11 @@ main(int argc, char **argv)
       if (necrit != *nw) {
         fprintf(stderr,"socket_wa_server write error, request nw=%d, written=%d\n",nw,necrit);
         close(fdesc);
-        exit(4);
+        Termine(4);
       }
     }
     else if (*RW_mode == 4) {  /* wasize request */
+      spin_count = 0;
       printf("Debug+ socket_wa_server requete WASIZE\n");
       fflush(stdout);
       *nw = c_wasize(iun);
@@ -191,10 +227,11 @@ main(int argc, char **argv)
     else {
       fprintf(stderr,"socket_wa_server error: invalid request=%d\n",*RW_mode);
       close(fdesc);
-      exit(5);
+      Termine(5);
     }
   }
   printf("Debug+ socket_wa_server fin de la boucle, ferme et termine\n");
   c_waclos(iun);
   close(fdesc);
+  Termine(0);
 }
