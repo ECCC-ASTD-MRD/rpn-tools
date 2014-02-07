@@ -14,6 +14,7 @@ VER = 2.1
 
 PROGRAM = r.basename 
 
+LIBRMN = rmn_014
 
 default: allbin
 
@@ -94,7 +95,7 @@ traffic: traffic.o
 	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o -abi $(ABI) -conly
 
 r.crackres: crackres.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -abi $(ABI) -librmn rmn_x
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -abi $(ABI) -librmn $(LIBRMN)
 
 arbre: arbre.o
 	s.compile -o arbre_$(VER)-$(BASE_ARCH) -obj arbre.o -abi $(ABI) -conly
@@ -104,6 +105,9 @@ grepdep: grepdep.o
 
 r.ucanrm: r.ucanrm.o
 	s.compile -o r.ucanrm_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
+
+wa_server: socket_wa_server.o
+	r.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o wa_server -bidon c -main cmain -librmn $(LIBRMN)
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm
