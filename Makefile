@@ -10,7 +10,7 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = -I$(ARMNLIB)/include
 
-VER = 2.1
+VER = 2.2
 
 PROGRAM = r.basename 
 
@@ -107,10 +107,22 @@ r.ucanrm: r.ucanrm.o
 	s.compile -o r.ucanrm_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
 
 wa_server: socket_wa_server.o
-	r.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o wa_server -bidon c -main cmain -librmn $(LIBRMN)
+	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o wa_server_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
+
+r.read_link: r.read_link.o
+	s.compile -o r.read_link_$(VER)-$(BASE_ARCH) -obj r.read_link.o -abi $(ABI) -conly
+
+host_ip_address: host_ip_address.o
+	s.compile -o host_ip_address_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -abi $(ABI) -conly
+
+r.seq: r.seq.o
+	s.compile -o r.seq_$(VER)-$(BASE_ARCH) -obj r.seq.o -abi $(ABI) -conly
+
+r.microsleep: r.microsleep.o
+	s.compile -o r.microsleep_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -abi $(ABI) -conly
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
-        arbre grepdep r.ucanrm
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep
 
 clean:
 	-if [ "*.ftn" != "`echo *.ftn`" ] ; \
