@@ -14,7 +14,9 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = -I$(ARMNLIB)/include
 
-VER = 5.0
+VER = 5.1
+
+LIBRMN = rmn_014
 
 default: absolu
 
@@ -32,7 +34,7 @@ OBJET= r.ip1.o
 FICHIERS = $(FDECKS)
 
 absolu: $(OBJET)
-	s.compile -o r.ip1_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip1 -abi $(ABI) -librmn rmn_013
+	s.compile -o r.ip1_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip1 -abi $(ABI) -librmn $(LIBRMN)
 
 clean:
 #Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
