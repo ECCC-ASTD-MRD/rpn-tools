@@ -8,7 +8,7 @@ CPPFLAGS = -I$(ARMNLIB)/include
 
 OBJETS = filetyp.o
 
-VER = 005
+VER = 006
 
 LIBRMN = rmn_014
 
