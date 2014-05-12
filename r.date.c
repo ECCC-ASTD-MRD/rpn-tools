@@ -98,7 +98,7 @@ char *argv[];
   if (argc < 2 ) print_usage();
   stamp0 = -1;
   if ( ((*argv[1] >= 'A' ) && (*argv[1] <= 'Z' )) || ((*argv[1] >= 'a' ) && (*argv[1] <= 'z' )) ) {
-     stamp0 = f77name(iopdatm)(argv[1],strlen(argv[1]));
+     stamp0 = f77name(iopdatm)(argv[1],(F2Cl) strlen(argv[1]));
      lng_stmp = 9;
      }
   else if ( (lng_stmp=strlen(argv[1])) < 8 ) print_usage();
@@ -188,7 +188,7 @@ char *argv[];
       stamp1 = -1;
       if ( ((*argv[2] >= 'A' ) && (*argv[2] <= 'Z' )) ||
            ((*argv[2] >= 'a' ) && (*argv[2] <= 'z' ))     ) {
-         stamp1 = f77name(iopdatm)(argv[2],strlen(argv[2]));
+         stamp1 = f77name(iopdatm)(argv[2],(F2Cl) strlen(argv[2]));
          lng_stmp = 9;
          }
       else lng_stmp=strlen(argv[2]);
