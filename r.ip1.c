@@ -82,7 +82,7 @@ char *argv[];
       sscanf(argv[1],"%d",&ip1);
 /*      ip1 = atoi(argv[1]);
         printf("ip1=%d\n",ip1); printf("calling convip\n"); */
-      f77name(convip)(&ip1,&lev,&kind,&mode,level_s,&flag,15);
+      f77name(convip)(&ip1,&lev,&kind,&mode,level_s,&flag,(F2Cl) 15);
       level_s[15] = '\0';
       if (kind_in_int) {
           printf("%f %d %s",lev,kind,cr);
@@ -106,7 +106,7 @@ char *argv[];
         printf("argv=%s\n",argv[1]); 
         printf("scanned %f\n",lev); 
         printf("scanned %d\n",kind); */
-      f77name(convip)(&ip1,&lev,&kind,&mode,level_s,&flag,15);
+      f77name(convip)(&ip1,&lev,&kind,&mode,level_s,&flag,(F2Cl) 15);
       printf("%d %s",ip1,cr);
   } 
 }
