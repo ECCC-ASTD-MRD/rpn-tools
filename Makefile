@@ -10,11 +10,13 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = -I$(ARMNLIB)/include
 
-VER = 2.2
+PROGRAM = r.basename
 
-PROGRAM = r.basename 
+PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
+        arbre grepdep r.ucanrm r.microsleep process_watch host_ip_address\
+        r.read_link
 
-LIBRMN = rmn_014
+LIBRMN = rmn_x
 
 default: allbin
 
@@ -25,7 +27,7 @@ default: allbin
 	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)"  -src $<
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
 .f.o:
 	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
@@ -53,7 +55,6 @@ SX5:    clean
 	r.distribute -as_armnlib -rels_$(RELS) -newbin SX5 $(PROGRAM)
 
 all:	Linux SGI HP SX4 SX5
-
 
 r.basename: r.basename.o
 	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o -abi $(ABI) -conly
@@ -98,28 +99,31 @@ r.crackres: crackres.o
 	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -abi $(ABI) -librmn $(LIBRMN)
 
 arbre: arbre.o
-	s.compile -o arbre_$(VER)-$(BASE_ARCH) -obj arbre.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj arbre.o -abi $(ABI) -conly
 
 grepdep: grepdep.o
-	s.compile -o grepdep_$(VER)-$(BASE_ARCH) -obj grepdep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj grepdep.o -abi $(ABI) -conly
 
 r.ucanrm: r.ucanrm.o
-	s.compile -o r.ucanrm_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
-
-wa_server: socket_wa_server.o
-	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o wa_server_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
-
-r.read_link: r.read_link.o
-	s.compile -o r.read_link_$(VER)-$(BASE_ARCH) -obj r.read_link.o -abi $(ABI) -conly
-
-host_ip_address: host_ip_address.o
-	s.compile -o host_ip_address_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -abi $(ABI) -conly
-
-r.seq: r.seq.o
-	s.compile -o r.seq_$(VER)-$(BASE_ARCH) -obj r.seq.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
 
 r.microsleep: r.microsleep.o
-	s.compile -o r.microsleep_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obs r.microsleep.o -abi $(ABI) -conly
+
+wa_server: socket_wa_server.o
+	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
+
+r.read_link: r.read_link.o
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.read_link.o -abi $(ABI) -conly
+
+host_ip_address: host_ip_address.o
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -abi $(ABI) -conly
+
+r.seq: r.seq.o
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.seq.o -abi $(ABI) -conly
+
+r.microsleep: r.microsleep.o
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -abi $(ABI) -conly
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep
