@@ -10,6 +10,8 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = -I$(ARMNLIB)/include
 
+VER = 2.2
+
 PROGRAM = r.basename
 
 PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
@@ -57,73 +59,73 @@ SX5:    clean
 all:	Linux SGI HP SX4 SX5
 
 r.basename: r.basename.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.basename.o -abi $(ABI) -conly
 
 r.ls: r.ls.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ls.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.ls.o -abi $(ABI) -conly
 
 r.isowner: r.isowner.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.isowner.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.isowner.o -abi $(ABI) -conly
 
 r.echo: r.echo.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.echo.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.echo.o -abi $(ABI) -conly
 
 r.split: spliter.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj spliter.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj spliter.o -abi $(ABI) -conly
 
 kmwtopcl: kmwtopcl.o newdx.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtopcl.o newdx.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj kmwtopcl.o newdx.o -abi $(ABI) -conly
 
 kmwtohp: kmwtohp.o newdx.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtohp.o newdx.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj kmwtohp.o newdx.o -abi $(ABI) -conly
 
 r.a2ps: a2ps.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj a2ps.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj a2ps.o -abi $(ABI) -conly
 
 text2ps: text2ps.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj text2ps.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj text2ps.o -abi $(ABI) -conly
 
 outine: outine.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj outine.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj outine.o -abi $(ABI) -conly
 
 lpage: lpage.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj lpage.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj lpage.o -abi $(ABI) -conly
 
 nl2crlf: nl2crlf.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj nl2crlf.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj nl2crlf.o -abi $(ABI) -conly
 
 traffic: traffic.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj traffic.o -abi $(ABI) -conly
 
 r.crackres: crackres.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -abi $(ABI) -librmn $(LIBRMN)
+	s.compile -o $@_$(VER) -obj crackres.o -abi $(ABI) -librmn $(LIBRMN)
 
 arbre: arbre.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj arbre.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj arbre.o -abi $(ABI) -conly
 
 grepdep: grepdep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj grepdep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj grepdep.o -abi $(ABI) -conly
 
 r.ucanrm: r.ucanrm.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.ucanrm.o -abi $(ABI) -conly
 
 r.microsleep: r.microsleep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obs r.microsleep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obs r.microsleep.o -abi $(ABI) -conly
 
 wa_server: socket_wa_server.o
-	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
+	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER) -bidon c -main cmain -librmn $(LIBRMN)
 
 r.read_link: r.read_link.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.read_link.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.read_link.o -abi $(ABI) -conly
 
 host_ip_address: host_ip_address.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj host_ip_address.o -abi $(ABI) -conly
 
 r.seq: r.seq.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.seq.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.seq.o -abi $(ABI) -conly
 
 r.microsleep: r.microsleep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER) -obj r.microsleep.o -abi $(ABI) -conly
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep
@@ -137,5 +139,5 @@ clean:
 	rm -f $$fn.f; \
 	done \
 	fi
-	-rm *_$(VER)-$(BASE_ARCH) *.o
+	-rm *_$(VER) *.o
 
