@@ -8,7 +8,7 @@ CFLAGS =
 
 OPTIMIZ = -O 2
 
-CPPFLAGS = -I$(ARMNLIB)/include
+CPPFLAGS = 
 
 VER = 2.2
 
