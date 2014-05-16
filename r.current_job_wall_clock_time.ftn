@@ -60,7 +60,7 @@
  6000 format(' This program only works under AIX and then',
      +       ' it returns the wall-clock time left',
      +       ' (in seconds)'/' for the current LoadLeveller-',
-     "       'controlled process/job.')
+     +       'controlled process/job.')
 #endif
  6001 format(' The only recognized parametre is "-help".')
 

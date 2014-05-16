@@ -109,9 +109,6 @@ grepdep: grepdep.o
 r.ucanrm: r.ucanrm.o
 	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
 
-r.microsleep: r.microsleep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obs r.microsleep.o -abi $(ABI) -conly
-
 wa_server: socket_wa_server.o
 	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
 
