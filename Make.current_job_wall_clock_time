@@ -1,8 +1,8 @@
 #! /bin/ksh
 # generer r.current_job_wall_clock_time
 RMNLIB_REVISION=$1
-if [ ${ARCH} = AIX ] ; then
-  PARAMS="-librmn ${RMNLIB_REVISION}"
+if [ ${BASE_ARCH} = AIX-powerpc7 ] ; then
+  PARAMS="-librmn ${RMNLIB_REVISION} -libsys llapi"
 else
   PARAMS=""
 fi
