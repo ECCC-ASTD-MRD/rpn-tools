@@ -12,7 +12,7 @@ CFLAGS =
 
 OPTIMIZ = -O 2
 
-CPPFLAGS = -I$(ARMNLIB)/include
+CPPFLAGS = 
 
 VER = 5.1
 
