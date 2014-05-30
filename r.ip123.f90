@@ -1,6 +1,7 @@
 program conv123
-use convert_ip123
+use ISO_C_BINDING
 implicit none
+include 'convert_ip123.inc'
 external :: ccard
 integer, parameter :: MAXARGS=9
 character (len=64), dimension(MAXARGS), save :: liste, def, val
