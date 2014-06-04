@@ -1,8 +1,9 @@
       program filetyp
+      implicit none
       character *8 cle
       character *4096 def(1),val(1)
       character *60 msgs(-1:34)
-      integer wkoffit
+      integer wkoffit,ipos,ier
 
       data cle /'-.'/
       data def /' '/
@@ -71,6 +72,7 @@
       end
       
       character *128 function product_id_tag()
+      implicit none
       product_id_tag='$Id$'
       return
       end
