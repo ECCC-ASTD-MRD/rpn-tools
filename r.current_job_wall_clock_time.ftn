@@ -14,7 +14,7 @@
 * 001 - May 2004 - Initial version
 *
       implicit none
-      integer nombre
+      integer nombre, iargc
       character*32 valeur
 #if defined (AIX)
       integer Used,SoftLim,HardLim
