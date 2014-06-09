@@ -6,5 +6,5 @@ if [ ${BASE_ARCH} = AIX-powerpc7 ] ; then
 else
   PARAMS=""
 fi
-r.compile -o r.current_job_wall_clock_time_0.0-${BASE_ARCH} ${PARAMS} -src r.current_job_wall_clock_time.ftn
+s.compile -o r.current_job_wall_clock_time_0.0-${BASE_ARCH} ${PARAMS} -src r.current_job_wall_clock_time.ftn
 exit $?
