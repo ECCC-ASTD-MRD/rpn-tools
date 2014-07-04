@@ -1,6 +1,6 @@
 .SUFFIXES:
 
-.SUFFIXES : .c .ftn .f .o .cdk .ftn90
+.SUFFIXES : .c .ftn .f .o .cdk .ftn90 .f90
 
 FFLAGS =
 
@@ -20,12 +20,16 @@ PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text
 
 LIBRMN = rmn_x
 
-default: allbin
+#default: allbin
+default: wlibrmn
 
 .ftn90.o:
 	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .ftn.o:
+	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+
+.f90.o:
 	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
@@ -125,7 +129,12 @@ r.microsleep: r.microsleep.o
 	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -abi $(ABI) -conly
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
-        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres
+
+slibrmn: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep
+
+wlibrmn: r.crackres wa_server
 
 clean:
 	-if [ "*.ftn" != "`echo *.ftn`" ] ; \
