@@ -1,10 +1,14 @@
 #! /bin/ksh
 # generer r.current_job_wall_clock_time
-RMNLIB_REVISION=$1
+
+VER=1.0
+
 if [ ${BASE_ARCH} = AIX-powerpc7 ] ; then
-  PARAMS="-librmn ${RMNLIB_REVISION} -libsys llapi"
+  PARAMS="-libsys llapi"
 else
   PARAMS=""
 fi
-s.compile -o r.current_job_wall_clock_time_0.0-${BASE_ARCH} ${PARAMS} -src r.current_job_wall_clock_time.ftn
+
+s.compile -o r.current_job_wall_clock_time_${VER}-${BASE_ARCH} ${PARAMS} -src r.current_job_wall_clock_time.ftn
+
 exit $?
