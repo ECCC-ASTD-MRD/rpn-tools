@@ -135,7 +135,7 @@ slibrmn: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2p
         arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep
 
 wlibrmn: r.crackres wa_server
-
+	./Make.current_job_wall_clock_time $(LIBRMN)
 clean:
 	-if [ "*.ftn" != "`echo *.ftn`" ] ; \
 	then \
