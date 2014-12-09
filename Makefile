@@ -8,9 +8,9 @@ CPPFLAGS =
 
 OBJETS = filetyp.o
 
-VER = 006
+VER = 008
 
-LIBRMN = rmn_014
+LIBRMN = rmn_015.1
 
 default: absolu
 
