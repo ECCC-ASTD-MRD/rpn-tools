@@ -16,7 +16,7 @@ PROGRAM = r.basename
 
 PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm r.microsleep process_watch host_ip_address\
-        r.read_link
+        r.read_link rrbx2ppm
 
 LIBRMN = rmn_015.1
 
@@ -24,19 +24,19 @@ LIBRMN = rmn_015.1
 default: wlibrmn
 
 .ftn90.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .ftn.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .f90.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
 .f.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 Linux:  clean
 	r.remotemake -as_armnlib Linux $(PROGRAM) RELS=$(RELS)
@@ -63,73 +63,76 @@ SX5:    clean
 all:	Linux SGI HP SX4 SX5
 
 r.basename: r.basename.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o -conly
 
 r.ls: r.ls.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ls.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ls.o -conly
 
 r.isowner: r.isowner.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.isowner.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.isowner.o -conly
 
 r.echo: r.echo.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.echo.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.echo.o -conly
 
 r.split: spliter.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj spliter.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj spliter.o -conly
 
 kmwtopcl: kmwtopcl.o newdx.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtopcl.o newdx.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtopcl.o newdx.o -conly
 
 kmwtohp: kmwtohp.o newdx.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtohp.o newdx.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtohp.o newdx.o -conly
 
 r.a2ps: a2ps.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj a2ps.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj a2ps.o -conly
 
 text2ps: text2ps.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj text2ps.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj text2ps.o -conly
 
 outine: outine.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj outine.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj outine.o -conly
 
 lpage: lpage.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj lpage.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj lpage.o -conly
 
 nl2crlf: nl2crlf.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj nl2crlf.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj nl2crlf.o -conly
 
 traffic: traffic.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o -conly
 
 r.crackres: crackres.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -abi $(ABI) -librmn $(LIBRMN)
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -librmn $(LIBRMN)
 
 arbre: arbre.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj arbre.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj arbre.o -conly
 
 grepdep: grepdep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj grepdep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj grepdep.o -conly
 
 r.ucanrm: r.ucanrm.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -conly
 
 wa_server: socket_wa_server.o
 	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
 
 r.read_link: r.read_link.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.read_link.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.read_link.o -conly
 
 host_ip_address: host_ip_address.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -conly
 
 r.seq: r.seq.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.seq.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.seq.o -conly
 
 r.microsleep: r.microsleep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -abi $(ABI) -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -conly
+
+rrbx2ppm: rrbx2ppm.o
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj rrbx2ppm.o 
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
-        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres rrbx2ppm
 
 slibrmn: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep
