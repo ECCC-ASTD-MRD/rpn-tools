@@ -10,7 +10,7 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = 
 
-VER = 2.2
+VER = 2.3
 
 PROGRAM = r.basename
 
@@ -18,7 +18,7 @@ PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text
         arbre grepdep r.ucanrm r.microsleep process_watch host_ip_address\
         r.read_link
 
-LIBRMN = rmn_x
+LIBRMN = rmn_015.1
 
 #default: allbin
 default: wlibrmn
