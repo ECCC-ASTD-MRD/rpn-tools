@@ -7,6 +7,7 @@ V3.0 Lee V., Jan 22, 2007 - adapt to take in negative values
 V4.0 Lee V., Oct 22, 2008 - an ip1code with no "-k" returned level_S and lev 
              but now returns level_S unless kind=3, then it will add "others"
 V5.1 M. Lepine Mar 2014 - reload with librmn_014
+V5.2 M. Lepine Dec 2014 - reload with librmn_015.1
 
 */
 #include <rpnmacros.h>
