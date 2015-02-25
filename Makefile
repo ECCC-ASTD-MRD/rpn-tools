@@ -10,7 +10,7 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = 
 
-VER = 2.3
+VER = 2.4
 
 PROGRAM = r.basename
 
