@@ -15,7 +15,7 @@ $(info OPTIMIZ is ${OPTIMIZ})
 
 CPPFLAGS = 
 
-VER = 4.2
+VER = 4.3
 
 LIBRMN = 
 
