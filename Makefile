@@ -16,7 +16,7 @@ PROGRAM = r.basename
 
 PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm r.microsleep process_watch host_ip_address\
-        r.read_link rrbx2ppm
+        r.read_link rrbx2ppm r.resetenv
 
 LIBRMN = rmn_015.2
 
@@ -131,8 +131,12 @@ r.microsleep: r.microsleep.o
 rrbx2ppm: rrbx2ppm.o
 	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj rrbx2ppm.o 
 
+r.resetenv: r.resetenv.c
+	r.compile -conly -librmn $(LIBRMN) -o $@_$(EC_ARCH) -src r.resetenv.c
+
+
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
-        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres rrbx2ppm
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres rrbx2ppm r.resetenv
 
 slibrmn: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
         arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep
