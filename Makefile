@@ -10,7 +10,7 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = 
 
-VER = 2.5
+VER = 16.0
 
 PROGRAM = r.basename
 
@@ -134,12 +134,14 @@ rrbx2ppm: rrbx2ppm.o
 r.resetenv: r.resetenv.c
 	r.compile -conly -librmn $(LIBRMN) -o $@_$(EC_ARCH) -src r.resetenv.c
 
+r.makedirs:
+	gcc makedir.c -o $@_$(VER)-$(BASE_ARCH)	
 
 allbin: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
-        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres rrbx2ppm r.resetenv
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq wa_server r.microsleep r.crackres rrbx2ppm r.resetenv r.makedirs
 
 slibrmn: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic\
-        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep
+        arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep r.makedirs
 
 wlibrmn: r.crackres wa_server
 	./Make.current_job_wall_clock_time $(LIBRMN)
