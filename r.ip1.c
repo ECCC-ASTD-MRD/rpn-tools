@@ -9,6 +9,7 @@ V4.0 Lee V., Oct 22, 2008 - an ip1code with no "-k" returned level_S and lev
 V5.1 M. Lepine Mar 2014 - reload with librmn_014
 V5.2 M. Lepine Dec 2014 - reload with librmn_015.1
 V5.3 M. Lepine Fev. 2015 - reload with librmn_015.2
+V5.4 M. Valin Dec. 2016 - correction au format d'impression pour l'option -k
 
 */
 #include <rpnmacros.h>
@@ -87,7 +88,8 @@ char *argv[];
       f77name(convip)(&ip1,&lev,&kind,&mode,level_s,&flag,(F2Cl) 15);
       level_s[15] = '\0';
       if (kind_in_int) {
-          printf("%f %d %s",lev,kind,cr);
+          printf("%#s%s",level_s,cr);
+        /*  printf("%f %d %s",lev,kind,cr); */
           }
       else if (kind == 3) {
               printf("%f others%s",lev,cr);
