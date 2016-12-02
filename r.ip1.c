@@ -88,7 +88,8 @@ char *argv[];
       f77name(convip)(&ip1,&lev,&kind,&mode,level_s,&flag,(F2Cl) 15);
       level_s[15] = '\0';
       if (kind_in_int) {
-          printf("%#s%s",level_s,cr);
+	  level_s[12] = '\0'; /* eliminer les caracteres pour le kind */
+          printf("%#s %d%s",level_s,kind,cr);
         /*  printf("%f %d %s",lev,kind,cr); */
           }
       else if (kind == 3) {
