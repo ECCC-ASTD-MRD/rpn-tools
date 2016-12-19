@@ -1,4 +1,4 @@
-/* r.ip1 program 
+/* r.ip program 
    Author: Vivian Lee, RPN, December 5, 2002
 
 Revision:
@@ -19,14 +19,14 @@ V5.4 M. Valin Dec. 2016 - correction au format d'impression pour l'option -k
 
 void print_usage()
     {
-      printf(" Usage : r.ip1 [-nk] ip1code\n");
+      printf(" Usage : r.ip [-nk] ipcode\n");
       printf(" Result: value [level_type or kind]\n");
-      printf(" Usage : r.ip1 [-no] [--]value kind\n");
-      printf(" Result: ip1code(newstyle or oldstyle)\n");
+      printf(" Usage : r.ip [-no] [--]value kind\n");
+      printf(" Result: ipcode(newstyle or oldstyle)\n");
       printf(" Formats :\n");
       printf(" options : -n to add end of line char\n");
       printf("         : -k to get code for kind \n");
-      printf("         : -o to get ip1code in oldstyle \n");
+      printf("         : -o to get ipcode in oldstyle \n");
       printf("         : -- to indicate value is negative \n");
       printf(" kind    : level_type\n");
       printf(" 0       : m  [metres] (height with respect to sea level)\n");
@@ -36,9 +36,9 @@ void print_usage()
       printf(" 4       : M  [metres] (height with respect to ground level)\n");
       printf(" 5       : hy [hybrid] (0.0->1.0)\n");
       printf(" 6       : th [theta]\n");
-      printf("Example(1): r.ip1 -nk 1000\n");
+      printf("Example(1): r.ip -nk 1000\n");
       printf("1000.000000 2\n");
-      printf("Example(2): r.ip1 -o 1000.0 2\n");
+      printf("Example(2): r.ip -o 1000.0 2\n");
       printf("1000\n");
       exit(1) ;
     }
