@@ -31,11 +31,16 @@ default: absolu
 	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 OBJET= r.ip1.o
+OBJET2= r.ip.o
 
 FICHIERS = $(FDECKS)
 
-absolu: $(OBJET)
+r.ip1: $(OBJET)
 	s.compile -o r.ip1_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip1 -abi $(ABI) -librmn $(LIBRMN)
+r.ip:  $(OBJET2)
+	s.compile -o r.ip_$(VER)-$(BASE_ARCH) -obj $(OBJET2) -bidon c -main r_ip -abi $(ABI) -librmn $(LIBRMN)
+
+absolu: r.ip1 r.ip
 
 clean:
 #Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
