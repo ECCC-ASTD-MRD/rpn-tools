@@ -36,11 +36,12 @@ OBJET2= r.ip.o
 FICHIERS = $(FDECKS)
 
 r.ip1: $(OBJET)
-	s.compile -o r.ip1_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip1 -abi $(ABI) -librmn $(LIBRMN)
+#s.compile -o r.ip1_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip1 -abi $(ABI) -librmn $(LIBRMN)
+	ln -s r.ip_$(VER)-$(BASE_ARCH) r.ip1_$(VER)-$(BASE_ARCH)
 r.ip:  $(OBJET2)
 	s.compile -o r.ip_$(VER)-$(BASE_ARCH) -obj $(OBJET2) -bidon c -main r_ip -abi $(ABI) -librmn $(LIBRMN)
 
-absolu: r.ip1 r.ip
+absolu: r.ip r.ip1
 
 clean:
 #Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
