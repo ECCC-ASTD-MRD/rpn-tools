@@ -10,6 +10,7 @@ V5.1 M. Lepine Mar 2014 - reload with librmn_014
 V5.2 M. Lepine Dec 2014 - reload with librmn_015.1
 V5.3 M. Lepine Fev. 2015 - reload with librmn_015.2
 V5.4 M. Valin Dec. 2016 - correction au format d'impression pour l'option -k
+v5.5 V. Lee   May 2018  - add documentation on other kinds
 
 */
 #include <rpnmacros.h>
@@ -36,6 +37,10 @@ void print_usage()
       printf(" 4       : M  [metres] (height with respect to ground level)\n");
       printf(" 5       : hy [hybrid] (0.0->1.0)\n");
       printf(" 6       : th [theta]\n");
+      printf("10       : H  [hours]\n");
+      printf("15       :    [reserved, integer]\n");
+      printf("17       :    [index X of conversion matrix]\n");
+      printf("21       : mp [pressure in metres]\n");
       printf("Example(1): r.ip -nk 1000\n");
       printf("1000.000000 2\n");
       printf("Example(2): r.ip -o 1000.0 2\n");
