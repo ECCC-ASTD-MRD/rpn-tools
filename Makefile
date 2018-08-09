@@ -1,3 +1,7 @@
+.SUFFIXES :
+
+.SUFFIXES : .c .F .f .o .a .f90
+
 FFLAGS =
 
 CFLAGS =
@@ -8,9 +12,9 @@ CPPFLAGS =
 
 OBJETS = filetyp.o
 
-VER = 009
+VER = 010
 
-LIBRMN = rmn_015.2
+LIBRMN = rmn_016.2
 
 default: absolu
 
@@ -20,11 +24,11 @@ default: absolu
 .c.o:
 	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
-.f.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+.f90.o:
+	s.f90 $(OPTIMIZ) -c $<
 
 absolu: $(OBJETS)
-	s.compile -o r.filetype_$(VER)-$(BASE_ARCH) -obj $(OBJETS) -abi $(ABI) -librmn $(LIBRMN)
+	s.compile -o r.filetype_$(VER)-$(BASE_ARCH) -obj $(OBJETS) -librmn $(LIBRMN)
 
 clean:
 	rm r.filetype_$(VER)-$(BASE_ARCH) $(OBJETS)
