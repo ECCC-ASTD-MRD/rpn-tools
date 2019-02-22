@@ -83,7 +83,7 @@
 *
 *     Set the encoding of IP1 to be in the newstyle by default
 *
-      call convip (ip1, lev, kind,0, blk_S, .false.)
+      call convip_plus (ip1, lev, kind,0, blk_S, .false.)
 
 *
 *     Look for the first record in the file
@@ -110,8 +110,8 @@
          if (var.eq.'^^'.or.var.eq.'>>'.or.var.eq.'HY') then
              ip1 = ip1a
          else 
-             call convip (ip1a, lev, kind,-1, blk_S, .false.)
-             call convip (ip1,  lev, kind,+1, blk_S, .false.)
+             call convip_plus (ip1a, lev, kind,-1, blk_S, .false.)
+             call convip_plus (ip1,  lev, kind,+1, blk_S, .false.)
          endif
 *     Write the field
          ier = fstecr(champ, WORK, -nbits, 20, dte, det, ipas,
