@@ -15,9 +15,9 @@ $(info OPTIMIZ is ${OPTIMIZ})
 
 CPPFLAGS = 
 
-VER = 5.3
+VER = 5.4
 
-LIBRMN = 
+LIBRMN = rmn
 
 default: absolu
 
@@ -35,7 +35,7 @@ OBJET= r.ip.o
 FICHIERS = $(FDECKS)
 
 r.ip:  $(OBJET)
-	s.compile -o r.ip_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip -abi $(ABI) -librmn $(LIBRMN)
+	s.compile -o r.ip_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip $(OPTIMIZ) -librmn $(LIBRMN)
 
 absolu: r.ip
 
