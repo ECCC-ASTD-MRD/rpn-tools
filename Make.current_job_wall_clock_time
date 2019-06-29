@@ -9,6 +9,6 @@ else
   PARAMS=""
 fi
 
-s.compile -o r.current_job_wall_clock_time_${VER}-${BASE_ARCH} ${PARAMS} -src r.current_job_wall_clock_time.ftn
+s.compile -o r.current_job_wall_clock_time_${VER}-${BASE_ARCH} ${PARAMS} -src r.current_job_wall_clock_time.ftn 
 
 exit $?

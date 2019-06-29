@@ -10,7 +10,7 @@ OPTIMIZ = -O 2
 
 CPPFLAGS = 
 
-VER = 16.0
+VER = 16.1
 
 PROGRAM = r.basename
 
@@ -18,7 +18,7 @@ PROGRAMS = r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text
         arbre grepdep r.ucanrm r.microsleep process_watch host_ip_address\
         r.read_link rrbx2ppm r.resetenv
 
-LIBRMN = rmn_015.2
+LIBRMN = rmn
 
 #default: allbin
 default: wlibrmn
@@ -63,76 +63,77 @@ SX5:    clean
 all:	Linux SGI HP SX4 SX5
 
 r.basename: r.basename.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.basename.o $(OPTIMIZ) -conly
 
 r.ls: r.ls.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ls.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ls.o $(OPTIMIZ) -conly
 
 r.isowner: r.isowner.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.isowner.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.isowner.o $(OPTIMIZ) -conly
 
 r.echo: r.echo.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.echo.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.echo.o $(OPTIMIZ) -conly
 
 r.split: spliter.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj spliter.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj spliter.o $(OPTIMIZ) -conly
 
 kmwtopcl: kmwtopcl.o newdx.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtopcl.o newdx.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtopcl.o newdx.o $(OPTIMIZ) -conly
 
 kmwtohp: kmwtohp.o newdx.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtohp.o newdx.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj kmwtohp.o newdx.o $(OPTIMIZ) -conly
 
 r.a2ps: a2ps.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj a2ps.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj a2ps.o $(OPTIMIZ) -conly
 
 text2ps: text2ps.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj text2ps.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj text2ps.o $(OPTIMIZ) -conly
 
 outine: outine.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj outine.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj outine.o $(OPTIMIZ) -conly
 
 lpage: lpage.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj lpage.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj lpage.o $(OPTIMIZ) -conly
 
 nl2crlf: nl2crlf.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj nl2crlf.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj nl2crlf.o $(OPTIMIZ) -conly
 
 traffic: traffic.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj traffic.o $(OPTIMIZ) -conly
 
 r.crackres: crackres.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o -librmn $(LIBRMN)
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj crackres.o $(OPTIMIZ) -librmn $(LIBRMN)
 
 arbre: arbre.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj arbre.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj arbre.o $(OPTIMIZ) -conly
 
 grepdep: grepdep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj grepdep.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj grepdep.o $(OPTIMIZ) -conly
 
 r.ucanrm: r.ucanrm.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.ucanrm.o $(OPTIMIZ) -conly
 
 wa_server: socket_wa_server.o
-	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER)-$(BASE_ARCH) -bidon c -main cmain -librmn $(LIBRMN)
+	s.compile -defines="-Dmain=cmain -DDEBUG=debug"  -src socket_wa_server.c -o $@_$(VER)-$(BASE_ARCH) -bidon c -main cmain $(OPTIMIZ) -librmn $(LIBRMN)
 
 r.read_link: r.read_link.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.read_link.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.read_link.o $(OPTIMIZ) -conly
 
 host_ip_address: host_ip_address.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj host_ip_address.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj host_ip_address.o $(OPTIMIZ) -conly
 
 r.seq: r.seq.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.seq.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.seq.o $(OPTIMIZ) -conly
 
 r.microsleep: r.microsleep.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o -conly
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj r.microsleep.o $(OPTIMIZ) -conly
 
 rrbx2ppm: rrbx2ppm.o
-	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj rrbx2ppm.o 
+	s.compile -o $@_$(VER)-$(BASE_ARCH) -obj rrbx2ppm.o $(OPTIMIZ) 
 
 r.resetenv: r.resetenv.c
-	r.compile -conly -librmn $(LIBRMN) -o $@_$(EC_ARCH) -src r.resetenv.c
+	#s.compile -conly $(OPTIMIZ) -librmn $(LIBRMN) -o $@_$(EC_ARCH) -src r.resetenv.c
+	s.compile -conly -librmn $(LIBRMN) -o $@_$(BASE_ARCH) -src r.resetenv.c
 
 r.makedirs:
 	gcc makedir.c -o $@_$(VER)-$(BASE_ARCH)	
@@ -144,7 +145,7 @@ slibrmn: r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2p
         arbre grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep r.makedirs
 
 wlibrmn: r.crackres wa_server
-	./Make.current_job_wall_clock_time $(LIBRMN)
+	./Make.current_job_wall_clock_time $(OPTIMIZ) $(LIBRMN) 
 clean:
 	-if [ "*.ftn" != "`echo *.ftn`" ] ; \
 	then \

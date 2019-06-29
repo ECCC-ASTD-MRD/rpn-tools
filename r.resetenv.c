@@ -1,4 +1,9 @@
 #include <rpnmacros.h>
+#include <stdlib.h>
+
+extern char *strcat();
+extern int f77name(resetenv)();
+
 main(int argc , char **argv)
 {
 char buffer[4096];
