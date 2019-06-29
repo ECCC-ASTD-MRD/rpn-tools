@@ -15,9 +15,9 @@ $(info OPTIMIZ is ${OPTIMIZ})
 
 CPPFLAGS = 
 
-VER = 1.2
+VER = 1.3
 
-LIBRMN = 
+LIBRMN = rmn
 
 default: absolu
 #default:
@@ -39,7 +39,7 @@ OBJET= r.ip123.o
 #absolu: $(OBJET)
 absolu:
 	rm -f a.out *.o *.mod
-	s.compile -src r.ip123.f90 -o r.ip123_$(VER)-$(BASE_ARCH)  -librmn $(LIBRMN)
+	s.compile -src r.ip123.f90 -o r.ip123_$(VER)-$(BASE_ARCH) $(OPTIMIZ) -librmn $(LIBRMN)
 test:
 	rm -f a.out *.o *.mod
 #	s.cc -c -I. *.c 
