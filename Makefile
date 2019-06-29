@@ -15,7 +15,7 @@ $(info OPTIMIZ is ${OPTIMIZ})
 
 CPPFLAGS = 
 
-VER = 4.3
+VER = 4.4
 
 LIBRMN = 
 
@@ -35,7 +35,7 @@ OBJET= ip1newstyle.o
 FICHIERS = $(FDECKS)
 
 absolu: $(OBJET)
-	s.compile -o ip1newstyle_$(VER)-$(BASE_ARCH) -obj $(OBJET) -abi $(ABI) -librmn $(LIBRMN)
+	s.compile -o ip1newstyle_$(VER)-$(BASE_ARCH) -obj $(OBJET) $(OPTIMIZ) -librmn $(LIBRMN)
 
 clean:
 #Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
