@@ -12,9 +12,9 @@ CPPFLAGS =
 
 OBJETS = filetyp.o
 
-VER = 010
+VER = 011
 
-LIBRMN = rmn_016.2
+LIBRMN = rmn
 
 default: absolu
 
@@ -28,7 +28,7 @@ default: absolu
 	s.f90 $(OPTIMIZ) -c $<
 
 absolu: $(OBJETS)
-	s.compile -o r.filetype_$(VER)-$(BASE_ARCH) -obj $(OBJETS) -librmn $(LIBRMN)
+	s.compile -o r.filetype_$(VER)-$(BASE_ARCH) -obj $(OBJETS) $(OPTIMIZ) -librmn $(LIBRMN)
 
 clean:
 	rm r.filetype_$(VER)-$(BASE_ARCH) $(OBJETS)
