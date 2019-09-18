@@ -12,7 +12,7 @@ CPPFLAGS =
 
 OBJETS = filetyp.o
 
-VER = 011
+VER = 012
 
 LIBRMN = rmn
 
