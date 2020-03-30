@@ -1,13 +1,13 @@
       program filetyp
       implicit none
-      character *8 cle(2)
-      character *4096 def(2),val(2)
-      character *60 msgs(-1:34)
-      integer wkoffit,ipos,ier
+      character *8 cle(10)
+      character *4096 def(10),val(10)
+      character *60 msgs(-1:37)
+      integer wkoffit,ipos,ier,t(8),i
 
-      data cle /'L ','-.'/
-      data def /'-L','  '/
-      data val /'  ','  '/
+      data cle /'L ',8*'T','-.'/
+      data def /'-L',8*'-1','  '/
+      data val /'  ',8*'-1','  '/
 
       data msgs(-1) /'unknown'/
       data msgs(0)  /'error: undefined value, 0'/
@@ -45,16 +45,28 @@
       data msgs(32) /'BMP'/     
       data msgs(33) /'RPN standard random 98'/
       data msgs(34) /'RPN standard sequential 98'/
+      data msgs(35) /'FICHIER NETCDF'/
+      data msgs(36) /'FICHIER CMCARC v4'/
+      data msgs(37) /'FICHIER CMCARC v5'/
 
 
       ipos = 0
-      call ccard (cle,def,val,2,ipos)
-
-      ier = wkoffit(val(2))
+      call ccard (cle,def,val,10,ipos)
+      do i = 1, 8
+        read(val(i+1),*)t(i)
+      enddo
+      ier = wkoffit(val(10))
       if (ier .gt. -1) then
-        write(6,77) 'File type is ',msgs(ier)
+        if(t(1) .ne. -1) then                    ! t option active, set ier to 0 if type in requested list
+          do i = 1,8
+            if(ier == t(i)) ier = 0
+          enddo
+          if(ier .ne. 0) ier = 1
+        else
+          write(6,77) 'File type is ',msgs(ier)  ! print message and return file type
+        endif
       else if (ier .eq. -1) then
-         call system('file '//trim(val(1))//' -m $ARMNLIB_DATA/magic.extra:/usr/share/misc/magic '//trim(val(2)))
+         call system('file '//trim(val(1))//' -m $ARMNLIB_DATA/magic.extra:/usr/share/misc/magic '//trim(val(10)))
 
 !         call system('file '//val(1))
       else if (ier .eq. -2) then
@@ -62,12 +74,14 @@
       else
         write(6,88)
       endif
-
+ 
  77   format(/,a,a60,/)
  88   format(/,'File does not exist or can not open',/)
  99   format(/,'File empty',/)
 
       call qqexit(ier)
+!      call qqexit(and(127,ier))
+!      call qqexit(and(255,ier))
       stop
       end
       

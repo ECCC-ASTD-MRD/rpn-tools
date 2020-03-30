@@ -12,17 +12,17 @@ CPPFLAGS =
 
 OBJETS = filetyp.o
 
-VER = 012
+VER = 013
 
 LIBRMN = rmn
 
 default: absolu
 
 .ftn.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
 
 .c.o:
-	s.compile -abi $(ABI) $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
+	s.compile $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
 
 .f90.o:
 	s.f90 $(OPTIMIZ) -c $<
