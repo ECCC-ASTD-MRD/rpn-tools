@@ -46,6 +46,7 @@ void main(int argc, char **argv){
       if(ndirs<=0 || nchars <=0 || nchars>9) usage("ERROR: ndirs, n must be >0 and n must be <10");
       sprintf(format,"%c%d.%dd",'%',nchars,nchars);
 /*      printf("format='%s', ndirs=%d\n",format,ndirs); */
+      // it is faster to create all directories and then check them all
       for (i=0 ; i<ndirs ; i++) { 
          sprintf(name,format,i);
          mkdir(name,0777);
