@@ -2,7 +2,7 @@
 .DEFAULT:
 	co $@
 
-VER = 113
+VER = 113.0.0
 
 LIBRMN = rmn
 OPTIMIZ=-O 2
