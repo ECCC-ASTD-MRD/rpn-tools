@@ -8,7 +8,7 @@ CPPFLAGS =
 
 OBJETS = r.crc.o
 
-VER = 2.5
+VER = 2.5.0
 
 LIBRMN = rmn
 
