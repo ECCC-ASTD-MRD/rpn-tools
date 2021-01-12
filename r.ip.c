@@ -11,12 +11,30 @@ V5.2 M. Lepine Dec 2014 - reload with librmn_015.1
 V5.3 M. Lepine Fev. 2015 - reload with librmn_015.2
 V5.4 M. Valin Dec. 2016 - correction au format d'impression pour l'option -k
 v5.5 V. Lee   May 2018  - add documentation on other kinds
-
+v5.5.1 D. Bouhemhem   Jan. 2021  - add function to ckeck kind is a number
 */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
+
+int check_kind(char str[])
+{
+    int i = 0;
+
+    //if negative number skip sign
+    if (str[0] == '-')
+        i = 1;
+    for (; str[i] != 0; i++)
+    {
+        //if (str[i] > '9' || str[i] < '0')
+        if (!isdigit(str[i]))
+            return 0;
+    }
+    return 1;
+}
+
 
 void print_usage()
     {
@@ -48,81 +66,99 @@ void print_usage()
       exit(1) ;
     }
 
-r_ip (argc,argv)
+r_ip (argc, argv)
 int argc;
 char *argv[];
 {
   /* Declarations */
-  int kind_in_int=0;
-  int oldstyle=0;
-  int negative=0;
-  int ip1,flag;
-  int mode,kind,i;
-  char *cr="\0";
+  int kind_in_int = 0;
+  int oldstyle = 0;
+  int negative = 0;
+  int ip1, flag;
+  int mode, i;
+  int kind = 9999;
+  char *cr = "\0";
   char *options;
   float lev;
   char level_s[16];
 
   
-  while (argc > 1 && *argv[1]=='-') {
+  while (argc > 1 && *argv[1] == '-')
+  {
      options = argv[1];
-     while (*++options){
-/*       printf("*options=%s \n",options); */
-       switch(*options){
-       case 'k' : kind_in_int  = 1; break ;
-       case 'n' : cr="\n" ; break ;
-       case 'o' : oldstyle = 1 ; break ;
-       case '-' : negative = 1; argv[1]=options; while(*++options); break;
-       default  : print_usage(); break ;
-         }
+     while (*++options)
+     {
+       switch(*options)
+       {
+	       case 'k' : kind_in_int = 1; break ;
+	       case 'n' : cr = "\n" ; break; 
+	       case 'o' : oldstyle = 1 ; break ;
+	       case '-' : negative = 1; argv[1] = options; while(*++options); break;
+	       default  : print_usage(); break ;
        }
-      if (negative) break;
+     }
+     
+     if (negative) 
+	      break;
       ++argv;
       --argc;
-      }
+  }
 
-/*  printf("argc=%d\n",&argc); */
 
-  if ( (argc < 2) || (argc > 3) ) print_usage();
-  if (argc == 2) {
-      mode=-1;
-      flag=1;
-      sscanf(argv[1],"%d",&ip1);
-/*      ip1 = atoi(argv[1]);
-        printf("ip1=%d\n",ip1); printf("calling convip\n"); */
-      f77name(convip_plus)(&ip1,&lev,&kind,&mode,level_s,&flag,(F2Cl) 15);
+  if ( (argc < 2) || (argc > 3) ) 
+	  print_usage();
+
+  if (argc == 2) 
+  {
+      mode = -1;
+      flag = 1;
+      sscanf(argv[1], "%d", &ip1);
+
+      f77name(convip_plus)(&ip1, &lev, &kind, &mode, level_s, &flag, (F2Cl) 15);
       level_s[15] = '\0';
-      if (kind_in_int) {
-          for(i=0 ; i<15 ; i++) if(level_s[i] != ' ') break;
-          /* get first non blank char */
-          for(i=i;i<15;i++) if(level_s[i] == ' ')level_s[i] = '\0';
-          /* replace blanks with nulls */
-          printf("%#s %d%s",level_s,kind,cr);
+      if (kind_in_int) 
+      {
+          for(i = 0 ; i < 15 ; i++) 
+		  if(level_s[i] != ' ') break;
 
-        /*  printf("%f %d %s",lev,kind,cr); */
-          }
-      else if (kind == 3) {
-              printf("%f others%s",lev,cr);
-               }
-      else printf("%#s%s",level_s,cr);
+	  /* get first non blank char */
+          for(i = i; i < 15; i++)
+	  { 
+		  if(level_s[i] == ' ')
+			  level_s[i] = '\0';
+	  }
+          /* replace blanks with nulls */
+          printf("%#s %d %s", level_s, kind, cr);
+
+      }
+      else if (kind == 3) 
+      {
+  	      printf("%f others %s", lev, cr);
+      }
+      else printf("%#s %s", level_s, cr);
   } 
 
-/*     printf("argc=%d\n",argc); */
 
-  if (argc == 3) {
-      mode=2;
-      if (oldstyle) mode=3;
-      flag=0;
-      sscanf(argv[1],"%f",&lev);
-      sscanf(argv[2],"%d",&kind);
-/*      lev = atof(argv[1]);
-        kind = atoi(argv[2]); 
-        printf("argv=%s\n",argv[1]); 
-        printf("scanned %f\n",lev); 
-        printf("scanned %d\n",kind); */
-      f77name(convip_plus)(&ip1,&lev,&kind,&mode,level_s,&flag,(F2Cl) 15);
-      printf("%d %s",ip1,cr);
+  if (argc == 3) 
+  {
+      mode = 2;
+      int ret = 20;
+      if (oldstyle) 
+	      mode = 3;
+      flag = 0;
+      sscanf(argv[1], "%f", &lev);
+
+      if(!check_kind(argv[2]))
+      {      
+        printf("Invalid kind = %s\n", argv[2]);
+	exit(1);
+      }
+
+      ret = sscanf(argv[2],"%d", &kind);
+
+      f77name(convip_plus)(&ip1, &lev, &kind, &mode, level_s, &flag, (F2Cl) 15);
+      printf("%d %s",ip1, cr);
   } 
 }
 
-char * product_id_tag="$Id$";
+char * product_id_tag = "$Id$";
