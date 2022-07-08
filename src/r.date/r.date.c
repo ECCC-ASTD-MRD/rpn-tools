@@ -41,7 +41,7 @@ void print_usage()
       exit(1) ;
     }
 
-int r_date_main(argc,argv)
+int main(argc,argv)
 int argc;
 char *argv[];
 {

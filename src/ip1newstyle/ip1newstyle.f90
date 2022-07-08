@@ -1,15 +1,15 @@
 
       program ip1newstyle
-*
-*author vivian lee Oct.4,2002
-*
-*object
-*  To convert IP1 oldstyle to IP1 newstyle given one or more FSTD files
-*  into one FSTD destination file
-*
-*  ip1newstyle -s file1 file2 file3 file4 [...file34] -d ip1new_file_98
-*  ip1newstyle -s file1 file2 file3 file4 [...file34]
-***
+
+!author vivian lee Oct.4,2002
+!
+!object
+!  To convert IP1 oldstyle to IP1 newstyle given one or more FSTD files
+!  into one FSTD destination file
+!
+!  ip1newstyle -s file1 file2 file3 file4 [...file34] -d ip1new_file_98
+!  ip1newstyle -s file1 file2 file3 file4 [...file34]
+
       implicit none
       integer work(10)
       real champ,lev
@@ -49,9 +49,9 @@
       enddo
 
       ier = 0
-*
-*     Open all the input files to be converted and link them together
-*
+
+!     Open all the input files to be converted and link them together
+
 
       if (nsrcfile .gt. 0) then
           do i = 1,nsrcfile
@@ -70,9 +70,9 @@
           print *,'ip1newstyle error: NO source files found'
           stop
       endif
-*
-*     Open the destination file
-*
+
+!     Open the destination file
+
       ier = fnom(20,val(1),'STD+RND',0)
       ier = fstouv(20,'STD+RND')
       if (ier .lt. 0) then
@@ -80,48 +80,47 @@
          stop
       endif
 
-*
-*     Set the encoding of IP1 to be in the newstyle by default
-*
+
+!     Set the encoding of IP1 to be in the newstyle by default
+
       call convip_plus (ip1, lev, kind,0, blk_S, .false.)
 
-*
-*     Look for the first record in the file
-*
+
+!     Look for the first record in the file
+
       key = fstinf(iun(1),ni1,nj1,nk1,-1,' ',-1,-1,-1,' ',' ')
       do while (key .ge. 0)
-         ier = fstprm ( key, dte, det, ipas, ni, nj, nk, nbits, dty,
-     $               ip1a,ip2,ip3, tva, var, etiket, grd, ig1,ig2,ig3,ig4,
-     $               swa,lng, dlf, ubc, ex1, ex2, ex3 )
-*
-*     Make sure there is enough memory for field to be read in
-*
+         ier = fstprm (key,dte,det,ipas,ni,nj,nk,nbits,dty,ip1a,ip2,ip3,&
+            tva,var,etiket,grd,ig1,ig2,ig3,ig4,swa,lng,dlf,ubc,ex1,ex2,ex3)
+
+!     Make sure there is enough memory for field to be read in
+
          if (ni*nj*nk .gt. alloue) then
              alloue = ni*nj*nk
              call hpdeallc(ptfield,errcode,abort)
              call hpalloc(ptfield,alloue,errcode,abort)
              print *,'memory allocation is increased: ni,nj,nk=',ni,nj,nk
          endif
-*     Read the field
+!     Read the field
          ier = fstluk(champ,key,ni1,nj1,nk1)
-*
-*     Avoid doing any IP1 conversion for records '^^','>>' and 'HY'
-*
+
+!     Avoid doing any IP1 conversion for records '^^','>>' and 'HY'
+
          if (var.eq.'^^'.or.var.eq.'>>'.or.var.eq.'HY') then
              ip1 = ip1a
          else 
              call convip_plus (ip1a, lev, kind,-1, blk_S, .false.)
              call convip_plus (ip1,  lev, kind,+1, blk_S, .false.)
          endif
-*     Write the field
-         ier = fstecr(champ, WORK, -nbits, 20, dte, det, ipas,
-     %                ni, nj, nk, ip1, ip2, ip3, tva, var, etiket,
-     %                grd, ig1, ig2, ig3, ig4, dty, .false.)
-*     Look for next record
+!     Write the field
+         ier = fstecr(champ, WORK, -nbits, 20, dte, det, ipas, &
+                  ni, nj, nk, ip1, ip2, ip3, tva, var, etiket, &
+                  grd, ig1, ig2, ig3, ig4, dty, .false.)
+!     Look for next record
          key = fstsui(iun(1),ni1,nj1,nk1)
       end do
 
-*     Close all files
+!     Close all files
       ier = fstfrm(iun(1))
       ier = fstfrm(20)
       call hpdeallc(ptfield,errcode,abort)

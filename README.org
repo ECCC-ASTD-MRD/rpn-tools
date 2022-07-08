@@ -1,5 +1,5 @@
 
-Collection of tools to manipulate RPN standard files
+Collection of tools
 
 * At CMC
 
