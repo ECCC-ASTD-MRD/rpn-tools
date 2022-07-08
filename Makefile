@@ -1,0 +1,52 @@
+.SUFFIXES :
+
+.SUFFIXES : .c .o
+
+SHELL = /bin/sh
+
+CPP = /lib/cpp
+
+FFLAGS =
+
+CFLAGS =
+
+OPTIMIZ = -O 2
+$(info OPTIMIZ is ${OPTIMIZ})
+
+CPPFLAGS = 
+
+VER = 5.5.1
+
+LIBRMN = rmn
+
+default: absolu
+
+.ftn.o:
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+
+.c.o:
+	s.compile $(OPTIMIZ) -opt "=$(CFLAGS)" -src $<
+
+.f.o:
+	s.compile $(OPTIMIZ) -opt "=$(FFLAGS)" -src $<
+
+OBJET= r.ip.o
+
+FICHIERS = $(FDECKS)
+
+r.ip:  $(OBJET)
+	s.compile -o r.ip_$(VER)-$(BASE_ARCH) -obj $(OBJET) -bidon c -main r_ip $(OPTIMIZ) -librmn $(LIBRMN)
+
+absolu: r.ip
+
+clean:
+#Faire le grand menage. On enleve tous les fichiers sources\ninutiles et les .o 
+	-if [ "*.ftn" != "`echo *.ftn`" ] ; \
+	then \
+	for i in *.ftn ; \
+	do \
+	fn=`r.basename $$i '.ftn'`; \
+	rm -f $$fn.f; \
+	done \
+	fi
+	rm *.o r.ip_$(VER)-$(BASE_ARCH)
