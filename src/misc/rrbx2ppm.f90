@@ -22,9 +22,9 @@ integer linfile,istat,loutfile,ostat,iframe
 integer left,cur1,cur2,cur3,pos,comp
 
 byte     RED(0:7), GREEN(0:7), BLUE(0:7)
-DATA RED   / 255, 000, 255, 000, 255, 255, 000, 000 /
-DATA GREEN / 255, 000, 000, 255, 255, 000, 255, 000 /
-DATA BLUE  / 255, 000, 000, 255, 000, 255, 000, 255 /
+DATA RED   / -1, 000, -1, 000, -1, -1, 000, 000 /
+DATA GREEN / -1, 000, 000, -1, -1, 000, -1, 000 /
+DATA BLUE  / -1, 000, 000, -1, 000, -1, 000, -1 /
 
 iframe=0
 nargs=command_argument_count()
