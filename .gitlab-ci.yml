@@ -75,54 +75,6 @@ build:amd64-gnu-9.3.0:
       paths:
          - build_amd64-gnu-9.3.0
 
-test:icelake-inteloneapi-2022.1.2:
-   stage: test
-   only:
-      - master
-      - dev
-      - tags
-   dependencies:
-      - build:icelake-inteloneapi-2022.1.2
-   script:
-      - set +e
-      - source ci-env/latest/rhel-8-icelake-64/inteloneapi-2022.1.2.sh
-      - . r.load.dot ${SSM}/libs
-      - set -e
-      - cd build_icelake-inteloneapi-2022.1.2
-      - make check
-
-test:amd64-inteloneapi-2022.1.2:
-   stage: test
-   only:
-      - master
-      - dev
-      - tags
-   dependencies:
-      - build:amd64-inteloneapi-2022.1.2
-   script:
-      - set +e
-      - source ci-env/latest/rhel-8-amd-64/inteloneapi-2022.1.2.sh
-      - . r.load.dot ${SSM}/libs
-      - set -e
-      - cd build_amd64-inteloneapi-2022.1.2
-      - make check
-
-test:amd64-gnu-9.3.0:
-   stage: test
-   only:
-      - master
-      - dev
-      - tags
-   dependencies:
-      - build:amd64-gnu-9.3.0
-   script:
-      - set +e
-      - source ci-env/latest/rhel-8-amd-64/gnu-9.3.0.sh 
-      - . r.load.dot ${SSM}/libs
-      - set -e
-      - cd build_amd64-gnu-9.3.0
-      - make check
-
 package:icelake-inteloneapi-2022.1.2:
    stage: package
    only:

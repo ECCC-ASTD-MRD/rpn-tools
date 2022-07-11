@@ -22,11 +22,12 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 ec_build_info()            # Generate build information
 
-# configure_file(version.in.inc version.inc @ONLY)
 #include(CTest)
 #add_custom_target(check COMMAND CTEST_OUTPUT_ON_FAILURE=TRUE ${CMAKE_CTEST_COMMAND})
 
-find_package(rmn ${rmn_REQ_VERSION} REQUIRED)
+if (NOT rmn_FOUND)
+   find_package(rmn ${rmn_REQ_VERSION} REQUIRED)
+endif()
 
 add_subdirectory(src/ip1newstyle)
 add_subdirectory(src/r.crc)

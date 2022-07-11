@@ -66,7 +66,7 @@ void print_usage()
       exit(1) ;
     }
 
-r_ip (argc, argv)
+main(argc, argv)
 int argc;
 char *argv[];
 {
