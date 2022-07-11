@@ -1,0 +1,35 @@
+add_executable(r.basename r.basename.c)
+add_executable(r.ls r.ls.c)
+add_executable(r.isowner r.isowner.c)
+add_executable(r.echo r.echo.c)
+add_executable(r.split spliter.c)
+add_executable(kmwtopcl  kmwtopcl.c newdx.c)
+add_executable(kmwtohp kmwtohp.c newdx.c)
+add_executable(r.a2ps a2ps.c)
+add_executable(text2ps text2ps.c)
+add_executable(outine outine.c)
+add_executable(lpage lpage.c)
+add_executable(nl2crlf nl2crlf.c)
+add_executable(traffic traffic.c)
+add_executable(arbre arbre.c)
+add_executable(grepdep grepdep.c)
+add_executable(r.ucanrm r.ucanrm.c)
+add_executable(r.read_link r.read_link.c)
+add_executable(host_ip_address host_ip_address.c)
+add_executable(r.seq r.seq.c)
+add_executable(r.microsleep r.microsleep.c)
+add_executable(rrbx2ppm rrbx2ppm.f90)
+add_executable(r.makedirs makedir.c)
+
+add_executable(r.crackres crackres.f90)
+target_link_libraries(r.crackres PRIVATE rmn) 
+
+add_executable(r.resetenv r.resetenv.c)
+target_link_libraries(r.resetenv PRIVATE rmn) 
+
+add_executable(wa_server socket_wa_server.c)
+target_link_libraries(wa_server PRIVATE rmn) 
+
+install(TARGETS r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic arbre 
+    grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep rrbx2ppm r.makedirs r.crackres r.resetenv wa_server
+        RUNTIME DESTINATION bin)

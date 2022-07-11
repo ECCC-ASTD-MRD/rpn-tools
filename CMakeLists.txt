@@ -35,6 +35,7 @@ add_subdirectory(src/r.date)
 add_subdirectory(src/r.filetype)
 add_subdirectory(src/r.ip1)
 add_subdirectory(src/r.ip123)
+add_subdirectory(src/misc)
 
 #----- Packaging
 ec_install_prefix(${NAME} ${PROJECT_VERSION} PACKAGE_PREFIX)   # Define package prefix  
