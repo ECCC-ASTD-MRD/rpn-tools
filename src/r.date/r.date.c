@@ -1,14 +1,3 @@
-/*Auteur: Simon Pellerin */
-/* 9 Decembre 1996 */
-/*Revision 1.01 Michel Valin */
-/* 26 fevrier 1998 */
-/*Revisions up to 1.05 Michel Valin */
-/* 1999 2000 2001 */
-/*Revision 1.07 M. Lepine - iopdatm.o pour $SPECIAL__uspmadt */
-/*Revision 1.08 M. Lepine - Mai 2007, product id tag + reload librmn_009 */
-/*Revision 1.09 M. Lepine - Mai 2007, correction format */
-/*Revision 1.10 M. Lepine - Jul 2012, add extended format */
-/*Revision 1.11 V. Lee    - Apr 2013, add comments for help */
 #include <rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,7 +54,6 @@ char *argv[];
   int force_long=0;
   char *options;
   char time_opt;
-  int not_alphnum=1;
   char *out_format=NULL;
   int out_format_flag=0;
   
@@ -96,12 +84,10 @@ char *argv[];
 
   /* Usage : */
   if (argc < 2 ) print_usage();
+
   stamp0 = -1;
-  if ( ((*argv[1] >= 'A' ) && (*argv[1] <= 'Z' )) || ((*argv[1] >= 'a' ) && (*argv[1] <= 'z' )) ) {
-     stamp0 = f77name(iopdatm)(argv[1],(F2Cl) strlen(argv[1]));
-     lng_stmp = 9;
-     }
-  else if ( (lng_stmp=strlen(argv[1])) < 8 ) print_usage();
+  if ( (lng_stmp=strlen(argv[1])) < 8 ) print_usage();
+
   /* Initialisation de la premiere date */
   if(*argv[1] == '=') {
      argv[1]++ ;
@@ -145,13 +131,9 @@ char *argv[];
     exit(0);
     }
 
-  not_alphnum=1;
-  if ( (*argv[2] >='A' && *argv[2] <= 'Z') ) not_alphnum=0;
-  if ( (*argv[2] >='a' && *argv[2] <= 'z') ) not_alphnum=0;
-
   if ( strlen(argv[2]) < 8 && *argv[2] != '+' && *argv[2] != '-' 
-      && *argv[2] != '='
-      &&  not_alphnum ) print_usage();
+      && *argv[2] != '=') print_usage();
+
   if (*argv[2] == '+' || *argv[2] == '-')
     {
       if(*argv[2] == '+') argv[2]++;
@@ -186,12 +168,8 @@ char *argv[];
   else
     {
       stamp1 = -1;
-      if ( ((*argv[2] >= 'A' ) && (*argv[2] <= 'Z' )) ||
-           ((*argv[2] >= 'a' ) && (*argv[2] <= 'z' ))     ) {
-         stamp1 = f77name(iopdatm)(argv[2],(F2Cl) strlen(argv[2]));
-         lng_stmp = 9;
-         }
-      else lng_stmp=strlen(argv[2]);
+      lng_stmp=strlen(argv[2]);
+      
       /* Initialisation de la deuxieme date */
       if(*argv[2] == '=') {
          argv[2]++ ;
