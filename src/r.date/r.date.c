@@ -5,7 +5,7 @@
 
 void print_usage()
     {
-      printf(" r.date Version 1.11\n");
+      printf(" r.date Version 1.12\n");
       printf(" Usage   : r.date [-nVSLMM] date1 [+ntime][SMDW]\n");
       printf(" Resultat: YYYYMMDDHHMMSSHH or CMC date time stamp\n");
       printf(" Example: r.date 2013041700 \n");
@@ -169,7 +169,7 @@ char *argv[];
     {
       stamp1 = -1;
       lng_stmp=strlen(argv[2]);
-      
+
       /* Initialisation de la deuxieme date */
       if(*argv[2] == '=') {
          argv[2]++ ;
