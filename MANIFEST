@@ -1,6 +1,6 @@
 NAME       : rpn-tools
-VERSION    : 20.0.0
-BUILD      : Release
+VERSION    : 
+BUILD      : 
 DESCRIPTION: ECCC-MRD Collection of tools 
 SUMMARY    : 
 MAINTAINER : Djamel Bouhemhem - Djamel.Bouhemhem@ec.gc.ca
