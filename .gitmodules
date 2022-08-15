@@ -5,4 +5,4 @@
 [submodule "ci-env"]
 	path = ci-env
 	url = ../ci-env
-    banch = dev
+	branch = dev
