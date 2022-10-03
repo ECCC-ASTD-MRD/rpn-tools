@@ -13,7 +13,7 @@ V5.4 M. Valin Dec. 2016 - correction au format d'impression pour l'option -k
 v5.5 V. Lee   May 2018  - add documentation on other kinds
 v5.5.1 D. Bouhemhem   Jan. 2021  - add function to ckeck kind is a number
 */
-#include <rpnmacros.h>
+#include <rmn/rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
