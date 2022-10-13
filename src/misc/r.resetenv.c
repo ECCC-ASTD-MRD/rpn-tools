@@ -1,4 +1,4 @@
-#include <rpnmacros.h>
+#include <rmn/rpnmacros.h>
 #include <stdlib.h>
 
 extern char *strcat();

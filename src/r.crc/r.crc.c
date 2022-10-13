@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
-/* #include "rpnmacros.h" */
 #include <string.h>
 
 int calc_crc(char *buffer,int *l,int *seed,int stride);
