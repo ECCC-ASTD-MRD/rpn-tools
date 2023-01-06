@@ -20,6 +20,7 @@ void print_usage()
       printf(" ntime units: none:hour,S:sec,M:min,D:day,W:week\n");
       printf(" options : \n");
       printf(" -n newline char\n");
+      printf(" -I ignore leap year\n");
       printf(" -L output format YYYY MM DD HH MM SS\n");
       printf(" -S output format CMC timestamp\n");
       printf(" -V output format YYYYMMDDHHMMSS00\n");
@@ -52,6 +53,7 @@ char *argv[];
   int force_stamp=0;
   int force_visual=0;
   int force_long=0;
+  int force_noleapyr=0;
   char *options;
   char time_opt;
   char *out_format=NULL;
@@ -66,6 +68,7 @@ char *argv[];
        case 'S' : force_stamp = 1; break ;
        case 'L' : force_long = 1; break ;
        case 'M' : factor_out *= 60 ; break ;
+       case 'I' : force_noleapyr = 1 ; break ;
        case 'n' : cr="\n" ; break ;
        case 'p' : out_format_flag=1 ; break ;
        case 'P' : out_format_flag=1 ; out_format="%03d%02d%02d" ; break ;
@@ -87,6 +90,12 @@ char *argv[];
 
   stamp0 = -1;
   if ( (lng_stmp=strlen(argv[1])) < 8 ) print_usage();
+
+  /* ignore leap year choisi */
+  if  (force_noleapyr == 1) {
+       f77name(ignore_leapyear)(); 
+       /*force_noleapyr = 0; */
+      }
 
   /* Initialisation de la premiere date */
   if(*argv[1] == '=') {
