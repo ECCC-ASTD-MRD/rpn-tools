@@ -1,5 +1,6 @@
 
       program ip1newstyle
+      use app
 
 !author vivian lee Oct.4,2002
 !
@@ -56,18 +57,21 @@
       if (nsrcfile .gt. 0) then
           do i = 1,nsrcfile
              iun(i)=i+24
-             print *,'iun(',i,')=',iun(i),'val(',i+1,')=',val(i+1)
+             write(app_msg,*) 'iun(',i,')=',iun(i),'val(',i+1,')=',val(i+1)
+             call app_log(APP_DEBUG,app_msg)
              if (fnom(iun(i),val(i+1),'STD+RND',0) .ge. 0) then
-             print *,'opening ',iun(i)
-             ier = fstouv(iun(i),'STD+RND')
+                write(app_msg,*) 'Opening ',iun(i)
+                call app_log(APP_INFO,app_msg)
+                ier = fstouv(iun(i),'STD+RND')
              else
-             print *,'ip1newstyle error: opening source file',val(i+1)
+                write(app_msg,*) 'Problems opening source file',val(i+1)
+                call app_log(APP_ERROR,app_msg)
              stop
              endif
           enddo
           if (nsrcfile.gt.1) ier = fstlnk(iun,nsrcfile)
       else
-          print *,'ip1newstyle error: NO source files found'
+         call app_log(APP_ERROR,'No source files found')
           stop
       endif
 
@@ -76,7 +80,8 @@
       ier = fnom(20,val(1),'STD+RND',0)
       ier = fstouv(20,'STD+RND')
       if (ier .lt. 0) then
-         print *,'ip1newstyle error: opening destination file',val(1)
+         write(app_msg,*) 'Problems opening destination file',val(i)
+         call app_log(APP_ERROR,app_msg)
          stop
       endif
 
@@ -99,7 +104,8 @@
              alloue = ni*nj*nk
              call hpdeallc(ptfield,errcode,abort)
              call hpalloc(ptfield,alloue,errcode,abort)
-             print *,'memory allocation is increased: ni,nj,nk=',ni,nj,nk
+             write(app_msg,*) 'Memory allocation is increased: ni,nj,nk=',ni,nj,nk
+             call app_log(APP_INFO,app_msg)
          endif
 !     Read the field
          ier = fstluk(champ,key,ni1,nj1,nk1)
