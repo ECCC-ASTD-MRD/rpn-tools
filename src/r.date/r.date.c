@@ -219,5 +219,3 @@ char *argv[];
   return 0;
 }
 
-
-char * product_id_tag="$Id$";

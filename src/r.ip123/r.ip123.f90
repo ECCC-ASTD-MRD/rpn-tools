@@ -1,5 +1,6 @@
 program conv123
 use ISO_C_BINDING
+use app
 implicit none
 include 'rmn/convert_ip123.inc'
 external :: ccard
@@ -19,9 +20,10 @@ npos=1
 call ccard(liste,def,val,MAXARGS,npos)
 debug = (val(3)(1:1)=='Y')
 if(debug) then
-  write(0,*)'number of positional parameters =',npos
-  if(npos==3) write(0,*)'INFO: (ip) => (value,kind) conversion'
-  if(npos==6) write(0,*)'INFO: (value,kind) => (ip) conversion'
+  write(app_msg,*)'number of positional parameters =',npos
+  call app_log(APP_INFO,app_msg)
+  if(npos==3) call app_log(APP_INFO,'(ip) => (value,kind) conversion')
+  if(npos==6) call app_log(APP_INFO,'(value,kind) => (ip) conversion')
   do i=1,MAXARGS
     write(0,101)trim(liste(i)),trim(val(i))
 101 format("'",A,"' ,","'",A,"'")
@@ -35,7 +37,8 @@ if(npos==3) then
   if(iostat/=0 .or. ip2<0)goto 222
   read(val(6),*,iostat=iostat)ip3
   if(iostat/=0 .or. ip3<0)goto 222
-  if(debug) write(0,102)'converting: ',ip1,ip2,ip3
+  write(app_msg,*)'converting: ',ip1,ip2,ip3
+  call app_log(APP_DEBUG,app_msg)
   iostat = decode_ip(v1,k1,v2,k2,v3,k3,ip1,ip2,ip3)
   if(iand(iostat,CONVERT_ERROR)==CONVERT_ERROR) goto 555
   print 103,'',v1,k1,v2,k2,v3,k3
@@ -55,32 +58,41 @@ if(npos==6) then
   if(iostat/=0 .or. k1<0)goto 444
   read(val(9),*,iostat=iostat)k3
   if(iostat/=0 .or. k1<0)goto 444
-  if(debug) write(0,103)'converting: ',v1,k1,v2,k2,v3,k3
+  write(app_msg,*)'converting: ',v1,k1,v2,k2,v3,k3
+  call app_log(APP_DEBUG,app_msg)
 103 format(a,3(G12.6,' ',i3))
   iostat = encode_ip(ip1,ip2,ip3,v1,k1,v2,k2,v3,k3)
-  if(debug) write(0,102)'result: ',ip1,ip2,ip3
+  write(app_msg,*)'result: ',ip1,ip2,ip3
+  call app_log(APP_DEBUG,app_msg)
   if(iand(iostat,CONVERT_ERROR)==CONVERT_ERROR) goto 555
   print 102,'',ip1,ip2,ip3
   if(iostat/=0 .and. val(2)(1:1)=='Y') goto 666
 endif
 stop
 222 continue
-  write(0,*)'ERROR: invalid value(s) for ip1/2/3: ',trim(val(4)),' ',trim(val(5)),' ',trim(val(6))
-  write(0,*)'       expected 3 non negative integers'
+  write(app_msg,*)'Invalid value(s) for ip1/2/3 (',trim(val(4)),' ',trim(val(5)),' ',trim(val(6)),&
+    '), expected 3 non negative integers'
+  call app_log(APP_ERROR,app_msg)
   call usage(2)
 333 continue
-  write(0,*)'ERROR: invalid value(s) for value1/2/3',trim(val(4)),' ',trim(val(6)),' ',trim(val(8))
-  write(0,*)'       expected 3 valid floating point numbers'
+  write(app_msg,*)'Invalid value(s) for value1/2/3 (',trim(val(4)),' ',trim(val(6)),' ',trim(val(8)),&
+    '), expected 3 valid floating point numbers'
+  call app_log(APP_ERROR,app_msg)
   call usage(3)
 444 continue
-  write(0,*)'ERROR: invalid value(s) for kind1/2/3: ',trim(val(5)),' ',trim(val(7)),' ',trim(val(9))
-  write(0,*)'       expected 3 non negative integers'
+  write(app_msg,*)'Invalid value(s) for kind1/2/3 (',trim(val(5)),' ',trim(val(7)),' ',trim(val(9)),&
+     '), expected 3 non negative integers'
+  call app_log(APP_ERROR,app_msg)
   call usage(4)
 555 continue
-  write(0,*)'WARNING: ip encoding/decoding error, code=', iostat
-  write(0,*)'         ip1/2/3    =',ip1,ip2,ip3
-  write(0,*)'         value1/2/3 =',v1,v2,v3
-  write(0,*)'         kind1/2/3  =',k1,k2,k3
+  write(app_msg,*)'ip encoding/decoding error, code=', iostat
+  call app_log(APP_WARNING,app_msg)
+  write(app_msg,*)'         ip1/2/3    =',ip1,ip2,ip3
+  call app_log(APP_VERBATIM,app_msg)
+  write(app_msg,*)'         value1/2/3 =',v1,v2,v3
+  call app_log(APP_VERBATIM,app_msg)
+  write(app_msg,*)'         kind1/2/3  =',k1,k2,k3
+  call app_log(APP_VERBATIM,app_msg)
   call usage(5)
 666 continue
   warn_text="WARNING"
@@ -88,10 +100,14 @@ stop
   if(iand(iostat,CONVERT_GOOD_GUESS)==CONVERT_GOOD_GUESS) warn_text = trim(warn_text)//" + GOOD_GUESS"
   if(iand(iostat,CONVERT_BAD_GUESS)==CONVERT_BAD_GUESS) warn_text = trim(warn_text)//" + BAD_GUESS"
   if(iand(iostat,CONVERT_TERRIBLE_GUESS)==CONVERT_TERRIBLE_GUESS) warn_text = trim(warn_text)//" + TERRIBLE_GUESS"
-  write(0,*)'ERROR: ip encoding/decoding warning, code(s)= ', trim(warn_text)
-  write(0,*)'       ip1/2/3    =',ip1,ip2,ip3
-  write(0,*)'       value1/2/3 =',v1,v2,v3
-  write(0,*)'       kind1/2/3  =',k1,k2,k3
+  write(app_msg,*)'ip encoding/decoding error, code=', iostat
+  call app_log(APP_ERROR,app_msg)
+  write(app_msg,*)'         ip1/2/3    =',ip1,ip2,ip3
+  call app_log(APP_VERBATIM,app_msg)
+  write(app_msg,*)'         value1/2/3 =',v1,v2,v3
+  call app_log(APP_VERBATIM,app_msg)
+  write(app_msg,*)'         kind1/2/3  =',k1,k2,k3
+  call app_log(APP_VERBATIM,app_msg)
   call qqexit(6)
 end
 subroutine usage(code)

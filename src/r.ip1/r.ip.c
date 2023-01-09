@@ -13,6 +13,7 @@ V5.4 M. Valin Dec. 2016 - correction au format d'impression pour l'option -k
 v5.5 V. Lee   May 2018  - add documentation on other kinds
 v5.5.1 D. Bouhemhem   Jan. 2021  - add function to ckeck kind is a number
 */
+#include <App.h>
 #include <rmn/rpnmacros.h>
 #include <stdlib.h>
 #include <string.h>
@@ -150,8 +151,8 @@ char *argv[];
 
       if(!check_kind(argv[2]))
       {      
-        printf("Invalid kind = %s\n", argv[2]);
-	exit(1);
+        App_Log(APP_ERROR,"Invalid kind = %s\n",argv[2]);
+	    exit(1);
       }
 
       ret = sscanf(argv[2],"%d", &kind);
@@ -160,5 +161,3 @@ char *argv[];
       printf("%d %s",ip1, cr);
   } 
 }
-
-char * product_id_tag = "$Id$";
