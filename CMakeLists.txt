@@ -27,6 +27,8 @@ if (NOT rmn_FOUND)
    find_package(rmn ${rmn_REQ_VERSION} REQUIRED)
 endif()
 
+link_libraries("-Wl,--disable-new-dtags")
+
 add_subdirectory(src/ip1newstyle)
 add_subdirectory(src/r.crc)
 add_subdirectory(src/r.date)
