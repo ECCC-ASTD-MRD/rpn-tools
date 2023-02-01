@@ -81,11 +81,11 @@
         write(app_msg,99)
         call app_log(APP_ERROR,app_msg)
       endif
- 
- 66   format(/,a,a60,/)
- 77   format(/,'File empty',/)
- 88   format(/,'File does not exist or can not open',/)
- 99   format(/,'File corrupt',/)
+
+ 66   format(a,a60)
+ 77   format('File empty')
+ 88   format('File does not exist or can not open')
+ 99   format('File corrupt')
 
       call qqexit(ier)
 !      call qqexit(and(127,ier))
