@@ -6,6 +6,8 @@
       character *60 msgs(-1:37)
       integer wkoffit,ipos,ier,t(8),i
 
+#include "rpn-tools_build_info.h"
+
       data cle /'L ',8*'T','-.'/
       data def /'-L',8*'-1','  '/
       data val /'  ',8*'-1','  '/
@@ -50,6 +52,9 @@
       data msgs(36) /'FICHIER CMCARC v4'/
       data msgs(37) /'FICHIER CMCARC v5'/
 
+      app_ptr = app_init(APP_MAIN, "r.filetype", VERSION, "Get the filetype of a file", BUILD_TIMESTAMP)
+      call app_start()
+      ier = app_loglevel("INFO")
 
       ipos = 0
       call ccard (cle,def,val,10,ipos)
