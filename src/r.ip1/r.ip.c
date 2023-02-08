@@ -56,6 +56,7 @@ void print_usage()
       printf(" 4       : M  [metres] (height with respect to ground level)\n");
       printf(" 5       : hy [hybrid] (0.0->1.0)\n");
       printf(" 6       : th [theta]\n");
+      printf(" 7       : m- [metres] (height below sea level)\n");
       printf("10       : H  [hours]\n");
       printf("15       :    [reserved, integer]\n");
       printf("17       :    [index X of conversion matrix]\n");
