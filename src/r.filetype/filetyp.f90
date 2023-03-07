@@ -3,7 +3,7 @@
       implicit none
       character *8 cle(10)
       character *4096 def(10),val(10)
-      character *60 msgs(-1:37)
+      character *60 msgs(-1:38)
       integer wkoffit,ipos,ier,t(8),i
 
       data cle /'L ',8*'T','-.'/
@@ -49,6 +49,7 @@
       data msgs(35) /'FICHIER NETCDF'/
       data msgs(36) /'FICHIER CMCARC v4'/
       data msgs(37) /'FICHIER CMCARC v5'/
+      data msgs(38) /'FICHIER HDF5'/
 
       ipos = 0
       call ccard (cle,def,val,10,ipos)
