@@ -22,13 +22,13 @@ add_executable(rrbx2ppm rrbx2ppm.f90)
 add_executable(r.makedirs makedir.c)
 
 add_executable(r.crackres crackres.f90)
-target_link_libraries(r.crackres PRIVATE rmn) 
+target_link_libraries(r.crackres PRIVATE rmn::rmn) 
 
 add_executable(r.resetenv r.resetenv.c)
-target_link_libraries(r.resetenv PRIVATE rmn) 
+target_link_libraries(r.resetenv PRIVATE rmn::rmn) 
 
 add_executable(wa_server socket_wa_server.c)
-target_link_libraries(wa_server PRIVATE rmn) 
+target_link_libraries(wa_server PRIVATE rmn::rmn) 
 
 install(TARGETS r.basename r.ls r.isowner r.echo r.split kmwtopcl kmwtohp r.a2ps text2ps outine lpage nl2crlf traffic arbre 
     grepdep r.ucanrm r.read_link host_ip_address r.seq r.microsleep rrbx2ppm r.makedirs r.crackres r.resetenv wa_server
