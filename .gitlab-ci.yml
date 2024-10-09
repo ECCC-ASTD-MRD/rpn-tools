@@ -241,7 +241,7 @@ build:rhel-8-amd64_gnu-14.1.0:
       - concurrent
    only:
      - master
-     - - dev
+     - dev
      - tags
    script:
       - source ${ECCI_ENV}/latest/profile.sh
@@ -264,7 +264,7 @@ package:rhel-8-amd64_gnu-14.1.0:
       - concurrent
    only:
       - master
-      - - dev
+      - dev
       - tags
       - schedules
    dependencies:
