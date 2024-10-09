@@ -6,6 +6,8 @@
 #include <time.h>
 #include "rpn-tools_build_info.h"
 
+void f77name(ignore_leapyear)();
+
 void print_usage()
     {
       printf(" r.date Version %s\n",RDATE_VERSION);
@@ -37,7 +39,7 @@ void print_usage()
       exit(1) ;
     }
 
-int print_date(int yyyymmdd,int hhmmsshh,char *Format,char *CR) {
+void print_date(int yyyymmdd,int hhmmsshh,char *Format,char *CR) {
    char   formatted[32];
    struct tm lctm;
 
@@ -56,9 +58,7 @@ int print_date(int yyyymmdd,int hhmmsshh,char *Format,char *CR) {
    }
 }
 
-int main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
    /* Declarations */
    int i;

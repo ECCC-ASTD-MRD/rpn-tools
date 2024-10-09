@@ -1,14 +1,21 @@
 #define min(a,b)  ((a<b) ? a : b)
 #define MAXRAST 1024
 static int RASTSIZE=300;
-static  char raster[MAXRAST];
-static  char xor;                         /* XOR status */
-static  short pat,oldpat;
-static  char *pnc, *limit;
-static  int rasno;
+static char raster[MAXRAST];
+static char xor;                         /* XOR status */
+static short pat,oldpat;
+static char *pnc, *limit;
+static int rasno;
+#include "newdx.h"
 
-void set_dx(rsz)
-int rsz;
+void shoot(char *ras, int n);
+
+void dx_setmem(char *ras, int n, char c)
+{
+  while(n--) *(ras++) = c ;
+}
+
+void set_dx(int rsz)
 {
   RASTSIZE = min(rsz,MAXRAST);
   rasno = 0;
@@ -20,8 +27,7 @@ int rsz;
   dx_setmem(raster,RASTSIZE,'\0');
 }
 
-int dx(cg)
-int cg;
+int dx(int cg)
 {
     static  int i;
     static  unsigned char c;
@@ -103,10 +109,3 @@ int cg;
     return(rasno);
 } /*  end dx  */
 
-dx_setmem(ras,n,c)
-char *ras;
-int n;
-char c;
-{
-  while(n--) *(ras++) = c ;
-}

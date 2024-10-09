@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <netdb.h>
+#include <stdlib.h>
 /*
   one argument, the host name for which the IPv4 address is needed
 
@@ -11,7 +12,7 @@
       host_ip_address www.microsoft.com
   has been tested on Linux, IRIX, AIX5
 */
-main(int argc , char **argv)
+int main(int argc , char **argv)
 {
      int **addr_list;
      struct hostent *answer;

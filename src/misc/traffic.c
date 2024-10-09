@@ -36,11 +36,7 @@
 void reduit(), augmente(), telquel();
 int seq_appel();
 
-
-main(argc,argv)
-int argc;
-char *argv[];
-
+int main(int argc, char *argv[])
 {
      FILE *entree;
      void (*alin)(), (*alex)(), (*commen)(); /*pointeurs aux fonctions a

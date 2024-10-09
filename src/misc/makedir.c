@@ -16,7 +16,7 @@ void usage(char *msg){
    exit(1);
 }
 
-void main(int argc, char **argv){
+int main(int argc, char **argv){
    char name[32];
    char format[32];
    int i, j, ndirs, nchars, nx, ny;

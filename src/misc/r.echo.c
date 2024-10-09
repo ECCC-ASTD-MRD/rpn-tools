@@ -33,9 +33,9 @@ int main(int argc, char **argv)
  *   verifier l'environnement
  */
        if ((ptr_diagnostik_exit = (unsigned char *)getenv("DIAGNOSTIC_EXIT")) == (unsigned char *) NULL) 
-          ptr_diagnostik_exit="DIAGNOSTIC_EXIT";
+          ptr_diagnostik_exit=(unsigned char *)"DIAGNOSTIC_EXIT";
 
-       if(( fichier = fopen(ptr_diagnostik_exit,"r")) != (FILE *) NULL) 
+       if(( fichier = fopen((char *)ptr_diagnostik_exit,"r")) != (FILE *) NULL) 
        {
           if(fgetc(fichier) != EOF)
                 return 0;

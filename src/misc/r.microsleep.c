@@ -1,7 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 
-main(int argc , char **argv)
+int main(int argc , char **argv)
 {
   unsigned long msec;
   unsigned long sec;

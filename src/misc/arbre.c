@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#include <stdlib.h>
 
 #define NCARMAX 128
 #define ELEMMAX 30000
@@ -23,17 +24,14 @@ struct arbre
 struct arbre node[ELEMMAX];
 char elem[ELEMMAX][NCARMAX];
 FILE *liste,*dependance;
+int binary(char *name);
 
 
 /*   program to construct a tree of dependencies */
 
-main(argc,argv)
-char **argv;
-int argc;
+int main(int argc, char **argv)
 {
     void tree();
-    int binary();
-    int exit();
 
     char *cpointeur;
     int i,j,k,pflag;
@@ -45,7 +43,7 @@ int argc;
         if ((liste = fopen(*argv,"r")) == (FILE *) NULL)
         {
             fprintf(stderr,"on ne peut ouvrir le fichier %s\n",*argv);
-            exit (0);
+            exit(0);
         }
 
 /*   open output file arbre_de_dependances   */
@@ -162,9 +160,8 @@ struct arbre npointer;
        }
 }
 
-int binary(name)
+int binary(char *name)
 /* algorithm from "The C programming language" */
-char *name;
 {
    int i,j,k;
 

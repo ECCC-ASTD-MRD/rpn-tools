@@ -1,4 +1,3 @@
-
 /*************************************************************************
  *   programme servant a comprimer une page de texte provenant           *
  *   d'un man page si elle comporte plus de 60 lignes                    *
@@ -12,31 +11,24 @@
  *************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define LMAX   60
 #define LMAXM1 59
 #define MAXD   80
 #define MAXDM1 79
 #define MAXCAR 80
-
 
-main(argc,argv)
-int argc;
-char *argv[];
-
+int main(int argc, char *argv[])
 {
-     FILE *impair, *pair;
+    FILE *impair, *pair;
 
     void compression(), ecrit_la_page();
     char page[MAXD][MAXCAR];
     char *ligne[MAXD];
     int nbligne = -1, i, page_num = 0;
-
-/*
- *  ouverture du ou des fichiers de sortie
- */
-    
-    
+    /*  ouverture du ou des fichiers de sortie */
     argv++;
     if((impair = fopen (*argv, "a")) == (FILE *) NULL)
     {
@@ -56,22 +48,16 @@ char *argv[];
     {
         pair=impair;
     }
-
-/*
- *  initialiser les pointeurs de lignes
- */
-
+    /* initialiser les pointeurs de lignes */
     for(i=0; i< MAXD; i++)
          ligne[i] = page[i] ;
 
-    while((gets(ligne[++nbligne]) != (char *) NULL) )
+    while((fgets(ligne[++nbligne], MAXCAR, stdin) != NULL ))
     {
        if((ligne[nbligne][0] == '\f') || (nbligne == MAXDM1))
        {
             page_num++;
-/*
- *          on a rencontre une fin de page: on la traite
- */
+            /* on a rencontré une fin de page: on la traite */
             compression(ligne,nbligne);
             if(page_num % 2)
                 ecrit_la_page(ligne,nbligne,impair);

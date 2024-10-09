@@ -22,6 +22,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include "rmn.h"
+#include "rmn/gossip.h"
 
 #define Termine(err)                   \
    {                                   \
@@ -33,7 +35,7 @@
 
 /* int connect_to_channel_by_name(char *name); */
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   int ipaddress,port,nc;
   char buf[1024], tempout[256], temperr[256], home_out[256], home_err[256];
@@ -41,17 +43,17 @@ main(int argc, char **argv)
   char ftype[128] = {"RND,"};
   char *ctemp;
   char *HOME;
-  int *wa_buf;
+  char *wa_buf;
   int max_n = 1024;
   int fdesc, UID, PID;
   int iun, ier, nlu, necrit, c_iun, not_over=1, spin_count=0;
   int access_mode=F_OK, new_checksum;
-  int *s_ID, *addr, *nw, *RW_mode, *checksum;
-  		/* RW_mode = 1  		read request */
+  char *s_ID, *addr, *nw, *RW_mode, *checksum;
+      /* RW_mode = 1  		        read request */
       /* RW_mode = 2 			write request */
       /* RW_mode = 3 			close request */
   int sock_comm_ID=0xBABE;
-  int demande[5];
+  char demande[5];
 
   s_ID = &(demande[0]);
   addr = &(demande[1]);
@@ -181,7 +183,7 @@ main(int argc, char **argv)
       }
       check_swap_records(wa_buf,*nw,sizeof(int));
       nc=write_stream(fdesc,wa_buf,*nw * sizeof(int));
-      printf("wrote %d bytes to descriptor %d at address %s\n",*nw * sizeof(int),fdesc,1+argv[3]);
+      printf("wrote %lu bytes to descriptor %d at address %s\n",*nw * sizeof(int),fdesc,1+argv[3]);
     }
     else if (*RW_mode == 2) {   /* write request */
       spin_count = 0;

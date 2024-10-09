@@ -1,16 +1,13 @@
-
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define NCARMAX 40
 
-static match = 1;
+int static match = 1;
 char *position;
 
-
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     char *verifie();
     char *trouve_pos();
@@ -66,7 +63,7 @@ char *argv[];
      }
 
 
-     if(*chaine == (char) NULL) 
+    if(*chaine == '\0')
      {
            match = 0;
      }

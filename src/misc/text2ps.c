@@ -6,8 +6,9 @@
  *	- Stephen Frede, UNSW, Australia
  */
 
-#include	<stdio.h>
-#include	<string.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define	TRUE		1
 #define	FALSE		0
@@ -27,17 +28,28 @@
 #define	TABSIZE		8
 
 
+void init(
+float fontsize,
+float opageoffset,
+float epageoffset,
+float topmargin,
+float linepitch,
+float rotation,
+char *fontname,
+float spacing);
+void process(FILE *istr);
+void pch(int ch);
+double mon_atof(char s[]);
+
 /* typedef char	int; */
 
 FILE		*ostr;
 
-char	usage[] = "Valid text2ps options:\n\t-r[angle]\n\t-f[font]\n\t-s[size]\n\t-h[space]\n\t-p[pitch]\n\t-o[offset]\n\t-oe[offset]\n\t-m[topmargin]\n\t-w[width]\n\t-l[length]\n\t-v\n\t-?\n";
+char *usage = "Valid text2ps options:\n\t-r[angle]\n\t-f[font]\n\t-s[size]\n\t-h[space]\n\t-p[pitch]\n\t-o[offset]\n\t-oe[offset]\n\t-m[topmargin]\n\t-w[width]\n\t-l[length]\n\t-v\n\t-?\n";
 int	tabsize,charsperline,  /* tab spacing in # chars, # chars per line */
 	linesperpage;          /* # lines per page */
 
-main(argc, argv)
-int	argc;
-char	**argv;
+int main(int argc, char	**argv)
 {
 	int	status = 0;	/* exit status (no. errors occured) */
 	float	opageoffset,
@@ -49,7 +61,6 @@ char	**argv;
 		rotation;
 	char	*fontname;
 	FILE	*istr;
-        double  atof();
 
 	fontsize = DFONTSIZE;
 	linepitch = 0.0;
@@ -78,7 +89,7 @@ char	**argv;
 					if(**argv == '\0')
 						opageoffset = OPAGEOFFSET;
 					else
-						opageoffset = atof(*argv) * CM;
+						opageoffset = mon_atof(*argv) * CM;
 					epageoffset = opageoffset;
 					}
 				else {
@@ -86,7 +97,7 @@ char	**argv;
 					if (**argv == '\0')
 						epageoffset = OPAGEOFFSET;
 					else 
-						epageoffset = atof(*argv) * CM;
+						epageoffset = mon_atof(*argv) * CM;
 					}
 				break;
 
@@ -94,32 +105,32 @@ char	**argv;
 				if(**argv == '\0')
 					topmargin = OTOPMARGIN;
 				else
-					topmargin = atof(*argv) * CM;
+					topmargin = mon_atof(*argv) * CM;
 				break;
 
 			case 'r':	/* rotation */
 				if(**argv == '\0')
 					rotation = 90.0;
 				else
-					rotation = atof(*argv);
+					rotation = mon_atof(*argv);
 				break;
 
 			case 'p':	/* pitch (line spacing) */
-				linepitch = atof(*argv);
+				linepitch = mon_atof(*argv);
 				break;
 
 			case 's':	/* font size */
 				if(**argv == '\0')
 					fontsize = OFONTSIZE;
 				else
-					fontsize = atof(*argv);
+					fontsize = mon_atof(*argv);
 				break;
 
 			case 't':	/* tab size */
 				if(**argv == '\0')
 					tabsize = 4;
 				else
-					tabsize = (int) atof(*argv);
+					tabsize = (int) mon_atof(*argv);
 				break;
 
 			case 'f':	/* font */
@@ -133,21 +144,21 @@ char	**argv;
 				if(**argv == '\0')
 					spacing = 0.25;
 				else
-					spacing = atof(*argv);
+					spacing = mon_atof(*argv);
 				break;
 
 			case 'w':	/* linewidth (chars per line) */
 				if(**argv == '\0')
 					charsperline = 72;
 				else
-					charsperline = (int) atof(*argv);
+					charsperline = (int) mon_atof(*argv);
 				break;
 
 			case 'l':	/* lines per page) */
 				if(**argv == '\0')
 					linesperpage = 60;
 				else
-					linesperpage = (int) atof(*argv);
+					linesperpage = (int) mon_atof(*argv);
 				break;
 
 			case 'v':	/* version # */
@@ -156,7 +167,7 @@ char	**argv;
 				break;
 
 			case '?':	/* usage - options */
-				fprintf(stderr, usage);
+				fprintf(stderr, "%s", usage);
 				exit(status);
 				break;
 
@@ -172,7 +183,7 @@ char	**argv;
 	}
 	if(status)
 	{
-		fprintf(stderr, usage);
+           fprintf(stderr, "%s", usage);
 		exit(status);
 		/* NOTREACHED */
 	}
@@ -200,8 +211,7 @@ char	**argv;
 	exit(status);
 }
 
-process(istr)
-FILE	*istr;
+void process(FILE *istr)
 {
 /*	register char	ch;  */
 	register int    ch;
@@ -305,15 +315,15 @@ char	*inittab[] = {
 	"} def",
 	(char *)0 };
 
-init(fontsize, opageoffset, epageoffset, topmargin, linepitch, rotation, fontname, spacing)
-float	fontsize,
-	opageoffset,
-	epageoffset,
-	topmargin,
-	linepitch,
-	spacing,
-	rotation;
-char	*fontname;
+void init(
+float fontsize,
+float opageoffset,
+float epageoffset,
+float topmargin,
+float linepitch,
+float rotation,
+char *fontname,
+float spacing)
 {
 	register char	**p;
 
@@ -345,8 +355,7 @@ char	*fontname;
 	fprintf(ostr, "newpath 0 pgtop moveto\n");
 }
 
-pch(ch)
-int	ch;
+void pch(int ch)
 {
 	if(ch < ' ' || ch > '~')
 		fprintf(ostr, "\\%3.3o", ch);
@@ -358,8 +367,7 @@ int	ch;
 	}
 }
 
-double atof(s) /* convert string to double */
-char s[];
+double mon_atof(char s[]) /* convert string to double */
 {
      double val, power;
      int i;

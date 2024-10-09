@@ -4,10 +4,7 @@
 
 #define MAXCAR 128*1024
 
-main(argc,argv)
-int argc;
-char *argv[];
-
+int main(int argc, char *argv[])
 {
    void splitit();
 
@@ -37,7 +34,7 @@ char ligne[MAXCAR];
      nc = 7;
   else
      nc = 0;
-  while ((*pc != NULL) && (*pc != '\n') && (nc < MAXCAR)) {
+  while ((*pc != '\0') && (*pc != '\n') && (nc < MAXCAR)) {
     nc++;
     if ((*pc == '~') && (*(pc+1) == '~')) {
       fputs("\n      ",stdout);

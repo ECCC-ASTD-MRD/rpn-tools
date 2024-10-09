@@ -20,16 +20,16 @@
       integer ip1a, ip1, ip2, ip3, ig1, ig2, ig3, ig4, swa, lng, dlf
       integer ubc, ex1, ex2, ex3
 
-      character *1 blk_S
-      character *2 grd, tva
-      character *4 var
-      character *12 etiket
+      character(len=1) blk_S
+      character(len=2) grd, tva
+      character(len=4) var
+      character(len=12) etiket
 
       integer iun(35), ier, errcode, abort, alloue
       integer ni1,nj1,nk1,kind,nsrcfile,i,j,k
 
-      character *8 cles(36)
-      character *256 def(36), val(36)
+      character(len=8) cles(36)
+      character(len=256) def(36), val(36)
 
       integer  fnom,fstouv,fstecr,fstfrm,fstprm,fstluk,fstlnk,fstsui,fstinf
       external fnom,fstouv,fstecr,fstfrm,fstprm,fstluk,fstlnk,fstsui,fstinf
@@ -133,7 +133,7 @@
       stop
       end
       
-      character *128 function product_id_tag()
+      character(len=128) function product_id_tag()
       product_id_tag='$Id$'
       return
       end

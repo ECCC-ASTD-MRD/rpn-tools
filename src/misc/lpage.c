@@ -1,12 +1,11 @@
-
+#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define ncarmax  255
 #define ncarplus 256
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 
 {
      FILE *entree;

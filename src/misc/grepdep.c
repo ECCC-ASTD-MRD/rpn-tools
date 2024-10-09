@@ -16,9 +16,7 @@
  * original version by James Caveen, November 1991          *
  * modified by V.Lee, November 1996                         *
  ************************************************************/
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
 
     char ligne[NCARMAX], nom[NOMMAX], comdeck[NOMMAX], *pointeur;

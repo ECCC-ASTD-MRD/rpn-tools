@@ -15,6 +15,7 @@ v5.5.1 D. Bouhemhem   Jan. 2021  - add function to ckeck kind is a number
 */
 #include <App.h>
 #include <rmn/rpnmacros.h>
+#include <rmn/convert_ip.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -68,9 +69,7 @@ void print_usage()
       exit(1) ;
     }
 
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
   /* Declarations */
   int kind_in_int = 0;

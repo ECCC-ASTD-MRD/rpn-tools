@@ -70,6 +70,9 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
 #ifdef ANSIC
 #include <time.h>
@@ -237,43 +240,41 @@ usage()
 /*
  * Set an option only if it's global.
  */
-void
-set_global_option(arg)
-char *arg;
+void set_global_option(char *arg)
 {
     switch (arg[1]) {
     case '?':				/* help */
     case 'h':
 	usage();
     case 'b':				/* print binary files */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	print_binaries = TRUE;
 	break;
     case 'c':				/* allow two files per sheet */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	twinfiles = TRUE;
 	break;
     case 'f':				/* fold lines too large */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	folding = TRUE;
 	break;
     case 'I':				/* include this file as a2ps prologue */
-	if (arg[2] == NULL)
+	if (arg[2] == '\0')
 	    usage();
 	    prologue = arg+2;
 	break;
     case 'i':				/* interpret control chars */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	interpret = TRUE;
 	break;
     case 'n':
-	if (arg[2] == NULL)
+	if (arg[2] == '\0')
 	    return;
-	if (arg[3] != NULL)
+	if (arg[3])
 	    usage();
 	switch (arg[2]) {
 	case 'b':			/* don't print binaries */
@@ -308,7 +309,7 @@ char *arg;
 	case 'p':
 	case 's':
 	case 'w':
-	    if (arg[3] != NULL)
+	    if (arg[3])
 		usage();
 	    return;
 	default:
@@ -317,7 +318,7 @@ char *arg;
 	break;
 #if LPR_PRINT
     case 'P':				/* fork a process to print */ 
-	if (arg[2] != NULL) {
+	if (arg[2]) {
 	    lpr_opt = (char *)malloc(strlen(arg)+1);
 	    strcpy(lpr_opt, arg);
 	}
@@ -325,16 +326,16 @@ char *arg;
 	break;
 #endif
     case 'r':				/* restart sheet number */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	restart = TRUE;
 	break;
     case 't':				/* set tab size */
-	if (arg[2] == NULL || (column_width = atoi(arg+2)) <= 0)
+	if (arg[2] == '\0' || (column_width = atoi(arg+2)) <= 0)
 	    usage();
 	break;
     case 'v':				/* print control chars */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	only_printable = FALSE;
 	break;
@@ -343,7 +344,7 @@ char *arg;
     case 'p':
     case 's':
     case 'w':
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
     case '#':
     case 'F':
@@ -353,7 +354,7 @@ char *arg;
     default:
 	usage();
     }
-    arg[0] = NULL;
+    arg[0] = '\0';
 }
 
 /*
@@ -362,9 +363,7 @@ char *arg;
  * The -H option is the only exception: it is applied only to the
  * file.
  */
-void
-set_positional_option(arg)
-char *arg;
+void set_positional_option(char *arg)
 {
     int copies;
     int lines;
@@ -385,7 +384,7 @@ char *arg;
 	printdate = TRUE;
 	break;
     case 'F':				/* change font size */
-	if (arg[2] == NULL || sscanf(&arg[2], "%f", &size) != 1 || size == 0.0)
+	if (arg[2] == '\0' || sscanf(&arg[2], "%f", &size) != 1 || size == 0.0)
 	{
 	    fprintf(stderr, "Wrong value for option -F: '%s'. Ignored\n",
 		    &arg[2]);
@@ -399,7 +398,7 @@ char *arg;
     case 'l':				/* set lines per page */
 	/* Useful with preformatted files. Scaling is automatically	*/
 	/* done when necessary.						*/
-	if (arg[2] == NULL || sscanf(&arg[2], "%d", &lines) != 1 ||
+	if (arg[2] == '\0' || sscanf(&arg[2], "%d", &lines) != 1 ||
 	    lines < 0 || lines > MAX_LINES)
 	{
 	    fprintf(stderr, "Wrong value for option -l: '%s'. Ignored\n",
@@ -413,7 +412,7 @@ char *arg;
 	numbering = FALSE;
 	break;
     case 'n':				/* number file lines */
-	if (arg[2] == NULL) {
+	if (arg[2] == '\0') {
 	    numbering = TRUE;
 	    break;
 	}
@@ -441,17 +440,17 @@ char *arg;
 	}
 	break;
     case 'p':				/* portrait format */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	new_landscape = FALSE;
 	break;
     case 's':				/* surrounding border */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	no_border = FALSE;
 	break;
     case 'w':				/* wide format */
-	if (arg[2] != NULL)
+	if (arg[2])
 	    usage();
 	new_wide_pages = TRUE;
 	break;
@@ -471,9 +470,7 @@ char *arg;
  * produced by nroff (no others sequences are recognized by the moment):
  *        <c><\b><c><\b><c><\b><c>
  */
-int
-mygetc(statusp)
-int *statusp;
+int mygetc(int *statusp)
 {
     static int curr = 0;
     static int size = 0;
@@ -484,7 +481,7 @@ int *statusp;
 
     /* Read a new line, if necessary */
     if (curr >= size) {
-	if (gets(buffer) == NULL)
+       if (fgets((char *)buffer, sizeof(buffer), stdin) == NULL)
 	    return  EOF;
 	size = strlen(buffer);
 	buffer[size] = '\n';
@@ -530,27 +527,23 @@ char *name;
 /*
  * Cut long filenames.
  */
-int
-cut_filename(old_name, new_name)
-char *old_name, *new_name;
+int cut_filename(char *old_name, char *new_name)
 {
-    register char *p;
-    register int i;
+    char *p;
+    int i;
     
     p = old_name + (strlen(old_name)-1);
     while (p >= old_name && *p != DIR_SEP) p--;
     
-    for (i = 0, p++; *p != NULL && i < MAXFILENAME; i++)
+    for (i = 0, p++; *p != '\0' && i < MAXFILENAME; i++)
 	*new_name++ = *p++;
-    *new_name = NULL;
+    *new_name = '\0';
 }
 
 /*
  * Print a char in a form accept by postscript printers.
  */
-int
-printchar(c)
-unsigned char c;
+int printchar(unsigned char c)
 {
     if (c >= ' ' && c < 0177)
     {
@@ -589,8 +582,7 @@ unsigned char c;
 /*
  * Begins a new physical page.
  */
-void
-skip_page()
+void skip_page()
 {
     if (twinpage == FALSE || sheetside == 1)
 	printf("%%%%Page: %d %d\n", sheets+1, sheets+1);
@@ -600,9 +592,7 @@ skip_page()
 /*
  * Fold a line too long.
  */
-int
-fold_line(name)
-char *name;
+int fold_line(char *name)
 {
     column = 0;
     printf(") s\n");
@@ -625,8 +615,7 @@ char *name;
 /*
  * Cut a textline too long to the size of a page line.
  */
-char
-cut_line()
+char cut_line()
 {
     int c;
     int status;
@@ -878,7 +867,7 @@ char *name, *title;
 
     /* Start file impression */
     putchar('(');
-    for (p = title; *p != NULL;)
+    for (p = title; *p != '\0';)
 	printchar(*p++);
     printf(") newfile\n");
 }
@@ -1041,6 +1030,7 @@ int header_opt;
 		nchars += (c&0177) < ' ' || (c&0177) == 0177 ? 2 : 1;
 	    }
 	    if (prefix_width + (column += nchars) > columnsperline)
+            {
 		if (folding) {
 		    if (fold_line(name) == FALSE)
 			return;
@@ -1049,7 +1039,8 @@ int header_opt;
 		    c = cut_line();
 		    new_status = IS_ROMAN;
 		    continue;
-		}
+                }
+            }
 	    nonprinting_chars += printchar(c);
 	    chars++;
 	    break;
@@ -1292,13 +1283,10 @@ print_standard_prologue()
 /*
  * Main routine for a2ps.
  */
-void
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
-    register int narg;
-    register char *arg;
+    int narg;
+    char *arg;
     int number;
 #if LPR_PRINT
     int fd[2], lpr_pid;
@@ -1346,7 +1334,7 @@ char *argv[];
     /* Print files designated or standard input */
     arg = argv[narg = 1];
     while (narg < argc) {
-	if (arg[0] != NULL) {
+	if (arg[0]) {
 	    if (arg[0] == '-')
 		set_positional_option(arg);
 	    else {

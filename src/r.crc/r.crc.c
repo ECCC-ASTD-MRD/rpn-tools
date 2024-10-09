@@ -6,9 +6,10 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
 
 int calc_crc(char *buffer,int *l,int *seed,int stride);
-main(int argc,char **argv)
+int main(int argc,char **argv)
 {
    int nblu,fd,crc16=0,stride;
    char *buffer;

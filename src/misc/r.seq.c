@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 static int	constant = 0;
 static int	nsteps;
 static char	*format;
 static int max,min,incr;
 
-void
-usage(void)
+void usage(void)
 {
-	fprintf(stderr, "usage: seq [-fformat] [-w] [first [incr]] last\n");
+ 	fprintf(stderr, "usage: seq [-fformat] [-w] [first [incr]] last\n");
 	exit(1);
 }
 
-void
-buildfmt(void)
+void buildfmt(void)
 {
 	char *dp;
 	int w, p, maxw, maxp;
@@ -46,8 +46,7 @@ buildfmt(void)
 	format = fmt;
 }
 
-void
-main(int argc, char **argv){
+int main(int argc, char **argv){
 	int j, n;
 	char buf[256], ffmt[4096];
 	double val;

@@ -57,7 +57,7 @@ arr=0
 allocate(rgb(3,nbr))
 1 continue
 write(6,'(A,/,A,A,/,2I8,/,I8)')'P6','#',trim(comment),nbr,nr,255
-call flush(6)
+flush(6)
 read(1,end=2)comment
 write(0,*)'"',trim(comment),'"'
 do k=1,nr

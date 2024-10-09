@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -12,7 +13,7 @@ extern int h_errno;
 #define is_a_file(a) ((a>>12)==010)
 #define is_a_link(a) ((a>>12)==012)
 
-main(int argc , char **argv)
+int main(int argc, char **argv)
 {
 struct stat stat_1;
 struct stat lstat_1;
@@ -58,11 +59,11 @@ if ( argc < 2 ) {
    }
 
 /* check for remote reference machine:path */
-/* if so issue an rsh to remote machine    */
+/* if so issue an ssh to remote machine    */
 
-if ( delimiter=strstr(argv[1],":" ) ) {
+ if ( (delimiter=strstr(argv[1],":" )) ) {
    *delimiter=0;
-   sprintf(buffer,"rsh %s /usr/local/env/armnlib/bin/%s %s",argv[1]
+   sprintf(buffer,"ssh %s /usr/local/env/armnlib/bin/%s %s",argv[1]
            ,progname,delimiter+1);
    system(buffer);
    exit(0);
@@ -83,7 +84,7 @@ if ( chdir(argv[1]) ) {               /* MUST be readable and chdir able */
    exit(1);
    }
 
-while (entry=readdir(directory)){     /* pass 1, directories and remotes */
+while ((entry=readdir(directory))){     /* pass 1, directories and remotes */
    if(entry->d_name[0] != '.') {      /* do not process "hidden" entries */
       if ( stat(entry->d_name,&stat_1) ) val1=0120000 ;
       else                               val1=stat_1.st_mode;
@@ -114,13 +115,13 @@ while (entry=readdir(directory)){     /* pass 1, directories and remotes */
 }
 
 rewinddir(directory);                  /* pass2, list ordinary files */
-while (entry=readdir(directory)){
+while ((entry=readdir(directory))){
    if(entry->d_name[0] != '.') {
       if ( stat(entry->d_name,&stat_1) ) val1=0120000 ;
       else                               val1=stat_1.st_mode;
       if ( is_a_file(val1) ){
          if(NULL!=strstr(entry->d_name," ")) continue;
-         printf("%s %s%s/%s %d\n",entry->d_name,remhost,argv[1],entry->d_name
+         printf("%s %s%s/%s %ld\n",entry->d_name,remhost,argv[1],entry->d_name
                  ,stat_1.st_size>>10);
          }
       }
