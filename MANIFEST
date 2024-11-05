@@ -6,7 +6,7 @@ SUMMARY    :
 MAINTAINER : Djamel Bouhemhem - Djamel.Bouhemhem@ec.gc.ca
 URL        : https://gitlab.science.gc.ca/RPN-SI/rpn-tools
 
-RDATE_VERSION : 1.13.0
+RDATE_VERSION : 1.13.1
 
 # Dependencies 
 #    =,<,<=,>,>= : Version rules
