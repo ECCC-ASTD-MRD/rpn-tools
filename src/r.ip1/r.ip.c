@@ -14,6 +14,7 @@ v5.5 V. Lee   May 2018  - add documentation on other kinds
 v5.5.1 D. Bouhemhem   Jan. 2021  - add function to ckeck kind is a number
 */
 #include <App.h>
+#include <rmn.h>
 #include <rmn/rpnmacros.h>
 #include <rmn/convert_ip.h>
 #include <stdlib.h>
