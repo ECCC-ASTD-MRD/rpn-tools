@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.20)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_rpn/modules $ENV{EC_CMAKE_MODULE_PATH})
 
 include(ec_init)           # Initialise compilers and ec specific functions
-ec_git_version()           # Get version from git state
 ec_parse_manifest()        # Parse MANIFEST file
 
 project(${NAME} DESCRIPTION "${DESCRIPTION}" LANGUAGES C Fortran)
@@ -37,9 +36,11 @@ add_subdirectory(src/r.ip1)
 add_subdirectory(src/r.ip123)
 add_subdirectory(src/misc)
 
+ec_build_config()                # Create build configuration script
+ec_git_version()                 # Get version from git state
+
 #----- Packaging
 ec_package_name()                # Define package prefix  
-ec_build_config()                # Create build configuration script
 ec_prepare_ssm()                 # Prepare ssm packaging files
 
 set(CPACK_GENERATOR "TGZ")
