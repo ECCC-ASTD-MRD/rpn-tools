@@ -5,7 +5,6 @@ variables:
    ORD_SOUMET_M: "8G"
    ORD_SOUMET_TMPFS: "1G"
 
-
 .env:
    build:
       - . r.load.dot ${ECCI_PROCESS_SSM}/libs
@@ -13,11 +12,7 @@ variables:
 include:
    - project: 'RPN-SI/ci-admin'
      ref: dev
-     file: '/ci/.gitlab-ci-config.yml'stages:
-   - build
-   - test
-   - package
-   - deploy
+     file: '/ci/.gitlab-ci-config.yml'
 
 deploy:staging:
    stage: deploy
