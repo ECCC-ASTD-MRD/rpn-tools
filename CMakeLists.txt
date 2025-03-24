@@ -11,8 +11,8 @@ ec_parse_manifest()        # Parse MANIFEST file
 project(${NAME} DESCRIPTION "${DESCRIPTION}" LANGUAGES C Fortran)
 set(PROJECT_VERSION ${VERSION}${STATE} CACHE STRING "Define the version of rpn-tools that will be baked into the various artifacts of this build" FORCE)
 
-iec_build_info()            # Generate build information
-nclude(ec_compiler_presets)
+ec_build_info()            # Generate build information
+include(ec_compiler_presets)
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 set(CMAKE_C_STANDARD 99)
