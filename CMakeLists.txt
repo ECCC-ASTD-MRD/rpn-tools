@@ -5,17 +5,17 @@ cmake_minimum_required(VERSION 3.20)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_rpn/modules $ENV{EC_CMAKE_MODULE_PATH})
 
 include(ec_init)           # Initialise compilers and ec specific functions
+ec_git_version()                 # Get version from git state
 ec_parse_manifest()        # Parse MANIFEST file
 
 project(${NAME} DESCRIPTION "${DESCRIPTION}" LANGUAGES C Fortran)
 set(PROJECT_VERSION ${VERSION}${STATE} CACHE STRING "Define the version of rpn-tools that will be baked into the various artifacts of this build" FORCE)
 
-include(ec_compiler_presets)
+iec_build_info()            # Generate build information
+nclude(ec_compiler_presets)
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 set(CMAKE_C_STANDARD 99)
-
-ec_build_info()            # Generate build information
 
 if (EC_INIT_DONE LESS 2)
    include(CTest)
@@ -36,11 +36,9 @@ add_subdirectory(src/r.ip1)
 add_subdirectory(src/r.ip123)
 add_subdirectory(src/misc)
 
-ec_build_config()                # Create build configuration script
-ec_git_version()                 # Get version from git state
-
 #----- Packaging
 ec_package_name()                # Define package prefix  
+ec_build_config()                # Create build configuration script
 ec_prepare_ssm()                 # Prepare ssm packaging files
 
 set(CPACK_GENERATOR "TGZ")
