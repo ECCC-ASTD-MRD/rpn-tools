@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
 
     char ligne[NCARMAX], nom[NOMMAX], comdeck[NOMMAX], *pointeur;
-    int c,i, on_continue,quotes;
+    int c,i, on_continue=0,quotes;
     FILE *fichier;
     void get_comdeck();
 
