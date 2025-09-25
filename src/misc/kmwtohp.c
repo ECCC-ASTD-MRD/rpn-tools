@@ -69,15 +69,18 @@ void toprt(FILE *fp)
 int main(int argc, char *argv[])
 {
    int c;
-   FILE *fp;
+   FILE *fp=NULL;
+   const char *fname="stdin";
 
-   if(argc==2) fp=fopen(argv[1],"r");
+   if(argc==2){
+      fname=argv[1];
+      fp=fopen(fname, "r");
+   }
    if(fp==NULL) {
-      argv[1] = "stdin";
-      fp = stdin;
+      fp=stdin;
    }
    set_dx(300);
-   fprintf(stderr," decompressing %s \n",argv[1]);
+   fprintf(stderr, " decompressing %s \n", fname);
    toprt(fp);
    fclose(fp);
    fprintf(stderr,"the END !!!\n");

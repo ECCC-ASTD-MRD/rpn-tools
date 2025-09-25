@@ -70,15 +70,15 @@ int main(int argc, char *argv[])
 {
   int c;
   FILE *fp=NULL;
-  const char *fname = "stdin";
+  const char *fname="stdin";
 
   if(argc==2) {
-     fname = argv[1];
-     fp = fopen(fname, "r");
+     fname=argv[1];
+     fp=fopen(fname, "r");
   }
 
   if(fp==NULL) {
-     fp = stdin;
+     fp=stdin;
     }
   set_dx(300);
   fprintf(stderr, " decompressing %s \n", fname);
