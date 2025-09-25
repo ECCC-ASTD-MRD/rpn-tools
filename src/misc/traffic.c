@@ -34,7 +34,7 @@
 #define nommax 133
 
 void reduit(), augmente(), telquel();
-int seq_appel();
+int seq_appel(int val_exit);
 
 int main(int argc, char *argv[])
 {
@@ -335,9 +335,7 @@ char *buffer;
  *                                                                       *
  *************************************************************************/
 
-int seq_appel(val_exit)
-int val_exit;
-
+int seq_appel(int val_exit)
 {
     fprintf(stderr,"\n\n\n");
     fprintf(stderr," traffic - sequence d'appel:\n\n");
