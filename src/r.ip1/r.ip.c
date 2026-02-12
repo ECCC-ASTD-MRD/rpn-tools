@@ -43,13 +43,13 @@ void print_usage()
     {
       printf(" Usage : r.ip [-nk] ipcode\n");
       printf(" Result: value [level_type or kind]\n");
-      printf(" Usage : r.ip [-no] [--]value kind\n");
+      printf(" Usage : r.ip [-no] [--] value kind\n");
       printf(" Result: ipcode(newstyle or oldstyle)\n");
       printf(" Formats :\n");
       printf(" options : -n to add end of line char\n");
       printf("         : -k to get code for kind \n");
       printf("         : -o to get ipcode in oldstyle \n");
-      printf("         : -- to indicate value is negative \n");
+      printf("         : -- to prevent negative values from being parsed as options\n");
       printf(" kind    : level_type\n");
       printf(" 0       : m  [metres] (height with respect to sea level)\n");
       printf(" 1       : sg [sigma] (0.0->1.0)\n");
@@ -67,7 +67,8 @@ void print_usage()
       printf("1000.000000 2\n");
       printf("Example(2): r.ip -o 1000.0 2\n");
       printf("1000\n");
-      exit(1) ;
+      printf("Example(3): r.ip -n -- -1.0 4\n");
+      printf("76507472\n");
     }
 
 int main(int argc, char *argv[])
@@ -85,30 +86,26 @@ int main(int argc, char *argv[])
   char level_s[16];
 
   
-  while (argc > 1 && *argv[1] == '-')
-  {
-     options = argv[1];
-     while (*++options)
-     {
-       switch(*options)
-       {
-	       case 'k' : kind_in_int = 1; break ;
-	       case 'n' : cr = "\n" ; break; 
-	       case 'o' : oldstyle = 1 ; break ;
-	       case '-' : negative = 1; argv[1] = options; while(*++options); break;
-	       default  : print_usage(); break ;
-       }
-     }
-     
-     if (negative) 
-	      break;
-      ++argv;
-      --argc;
+  char *argv1=argv[1];
+  int c;
+  while((c = getopt(argc, argv, "knoh")) != -1){
+    switch(c){
+    case 'k': kind_in_int = 1; break;
+    case 'n' : cr = "\n" ; break;
+    case 'o' : oldstyle = 1 ; break ;
+    case 'h' : print_usage(); exit(0);
+    case '?' : print_usage(); exit(2);
+    }
   }
+  argc -= optind-1;
+  argv += optind-1;
 
 
-  if ( (argc < 2) || (argc > 3) ) 
-	  print_usage();
+  if ( (argc < 2) || (argc > 3) ){
+    fprintf(stderr, "ERROR: Incorrect number of arguments\n");
+    print_usage();
+    exit(2);
+  }
 
   if (argc == 2) 
   {
@@ -159,6 +156,10 @@ int main(int argc, char *argv[])
       ret = sscanf(argv[2],"%d", &kind);
 
       f77name(convip_plus)(&ip1, &lev, &kind, &mode, level_s, &flag, (F2Cl) 15);
-      printf("%d %s",ip1, cr);
+      if(ip1 == -999999){
+        fprintf(stderr, "r.ip1: Error converting level=%f kind=%d\n", lev, kind);
+        exit(1);
+      }
+      printf("%d%s",ip1, cr);
   } 
 }
