@@ -56,13 +56,13 @@ void print_usage()
       printf(" 2       : mb [mbars] (pressure in millibars)\n");
       printf(" 3       :    [others] (arbitrary code)\n");
       printf(" 4       : M  [metres] (height with respect to ground level)\n");
-      printf(" 5       : hy [hybrid] (0.0->1.0)\n");
+      printf(" 5       : hy [hybrid pressure] (0.0->1.0)\n");
       printf(" 6       : th [theta]\n");
       printf(" 7       : m- [metres] (height below sea level)\n");
       printf("10       : H  [hours]\n");
       printf("15       :    [reserved, integer]\n");
       printf("17       :    [index X of conversion matrix]\n");
-      printf("21       : mp [pressure in metres]\n");
+      printf("21       : hh [hybrid height] (0.0->1000000.0)\n");
       printf("Example(1): r.ip -nk 1000\n");
       printf("1000.000000 2\n");
       printf("Example(2): r.ip -o 1000.0 2\n");
