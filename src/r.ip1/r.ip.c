@@ -21,6 +21,7 @@ v5.5.1 D. Bouhemhem   Jan. 2021  - add function to ckeck kind is a number
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <getopt.h>
 
 int check_kind(char str[])
 {
