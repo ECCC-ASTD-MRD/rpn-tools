@@ -19,7 +19,9 @@ set(CMAKE_C_STANDARD 99)
 
 if (EC_INIT_DONE LESS 2)
    include(CTest)
+   add_custom_target(test_execs)
    add_custom_target(check COMMAND CTEST_OUTPUT_ON_FAILURE=TRUE ${CMAKE_CTEST_COMMAND})
+   add_dependencies(check test_execs)
 endif()
 
 if (NOT rmn_FOUND)
