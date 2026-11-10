@@ -42,9 +42,9 @@ int check_kind(char str[])
 
 void print_usage()
     {
-      printf(" Usage : r.ip [-nk] ipcode\n");
+      printf(" Usage : r.ip1 [-nk] ipcode\n");
       printf(" Result: value [level_type or kind]\n");
-      printf(" Usage : r.ip [-no] [--] value kind\n");
+      printf(" Usage : r.ip1 [-no] [--] value kind\n");
       printf(" Result: ipcode(newstyle or oldstyle)\n");
       printf(" Formats :\n");
       printf(" options : -n to add end of line char\n");
@@ -64,11 +64,11 @@ void print_usage()
       printf("15       :    [reserved, integer]\n");
       printf("17       :    [index X of conversion matrix]\n");
       printf("21       : hh [hybrid height] (0.0->1000000.0)\n");
-      printf("Example(1): r.ip -nk 1000\n");
+      printf("Example(1): r.ip1 -nk 1000\n");
       printf("1000.000000 2\n");
-      printf("Example(2): r.ip -o 1000.0 2\n");
+      printf("Example(2): r.ip1 -o 1000.0 2\n");
       printf("1000\n");
-      printf("Example(3): r.ip -n -- -1.0 4\n");
+      printf("Example(3): r.ip1 -n -- -1.0 4\n");
       printf("76507472\n");
     }
 
